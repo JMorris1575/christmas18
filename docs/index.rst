@@ -10,6 +10,8 @@ Welcome to Christmas 2018's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   plans.rst
+
 
 
 Indices and tables
