@@ -5,5 +5,5 @@ from .views import GiftListView
 
 app_name = 'gift'
 urlpatterns = [
-    path('gift-list', login_required(GiftListView), name="home"),
+    path('gift-list/', login_required(GiftListView.as_view()), name="home"),
 ]

@@ -7,8 +7,8 @@ $color-header-link: rgba(255, 221, 85, 0.8) !important;
 $color-header-link-hover: rgba(255, 221, 85, 1.0) !important;
 
 header, footer {
-    background: $secondary;
-    color: $color-yellow-gold;
+    background: $primary;
+    color: $secondary;
 }
 
 header a {
@@ -21,7 +21,28 @@ header a:hover {
     text-decoration: none;
 }
 
+header img {
+    vertical-align: top;
+    opacity: 0.9;
+}
+
+header img:hover {
+    opacity: 1.0;
+}
+
 .header-text {
     font-family: 'Great Vibes', cursive;
     font-size: 4rem;
+}
+
+.navbar-toggler {
+    border: none;
+}
+
+.navbar-toggler:focus {
+    outline: none;
+}
+
+.navbar-toggler-icon {
+    color: $secondary;
 }
