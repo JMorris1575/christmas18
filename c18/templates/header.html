@@ -24,7 +24,7 @@
                         <div class="col">
                             {% if user.is_authenticated %}
                                 <span class="h5">Welcome {{ user.first_name }}!</span>
-                                <a class="link" href="{% url 'user:logout' %)">  (Logout)</a>
+                                <a class="link" href="{% url 'user:logout' %}">  (Logout)</a>
                             {% else %}
                                 <span class="h5">Welcome!</span>
                                 <a class="link" href="{% url 'user:login' %}?next={{ request.path_info }}">  (Login)</a>
