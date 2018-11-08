@@ -1,0 +1,27 @@
+@import 'custom.scss';
+
+// SCSS Variables
+
+$color-yellow-gold: #ffdd55;
+$color-header-link: rgba(255, 221, 85, 0.8) !important;
+$color-header-link-hover: rgba(255, 221, 85, 1.0) !important;
+
+header, footer {
+    background: $secondary;
+    color: $color-yellow-gold;
+}
+
+header a {
+    color: $color-header-link;
+    text-decoration: none;
+}
+
+header a:hover {
+    color: $color-header-link-hover;
+    text-decoration: none;
+}
+
+.header-text {
+    font-family: 'Great Vibes', cursive;
+    font-size: 4rem;
+}
