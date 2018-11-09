@@ -1,9 +1,10 @@
 from django.db import models
 from django.conf import settings
 
-import utilities
+from base_classes import ModelNameMethod
 
 import os
+
 
 class Gift(models.Model):
     gift_number = models.SmallIntegerField()
@@ -14,7 +15,6 @@ class Gift(models.Model):
 
     class Meta:
         ordering = ['gift_number']
-
 
     def __str__(self):
         return 'Gift ' + str(self.gift_number)
@@ -31,7 +31,7 @@ class Gift(models.Model):
         return comments
 
 
-class Comment(models.Model):
+class Comment(ModelNameMethod):
     gift = models.ForeignKey(Gift, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     comment = models.TextField()
@@ -43,5 +43,5 @@ class Comment(models.Model):
             return self.comment
 
     def display(self):
-        prefix = utilities.get_name(self.user) + ' says: '
+        prefix = self.get_name(self.user) + ' says: '
         return prefix + self.comment

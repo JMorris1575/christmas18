@@ -6799,6 +6799,14 @@ header img {
 header img:hover {
   opacity: 1.0; }
 
+.gift-card {
+  border: 3px solid;
+  border-radius: 1rem; }
+
+.gift-card img {
+  border-top-left-radius: 0.75rem;
+  border-top-right-radius: 0.75rem; }
+
 .header-text {
   font-family: 'Great Vibes', cursive;
   font-size: 4rem; }
