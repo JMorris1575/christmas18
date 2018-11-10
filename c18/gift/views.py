@@ -23,3 +23,17 @@ class GiftSelectView(View):
         current_gift.receiver = request.user
         current_gift.save()
         return redirect(reverse('gift:home'))
+
+
+class GiftChangeMindView(View):
+
+    def post(self, request, gift_number):
+        current_gift = Gift.objects.get(gift_number=gift_number)
+        current_gift.selected = False
+        current_gift.receiver = None
+        current_gift.save()
+        return redirect(reverse('gift:home'))
+
+
+class GiftCommentView(View):
+    pass
