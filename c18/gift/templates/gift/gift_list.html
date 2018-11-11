@@ -14,19 +14,16 @@
                             <p class="card-text">{{ gift.description }}</p>
                             <div class="row justify-content-between mt-auto">
                                 {% if gift.receiver == user %}
-                                    <form action="{% url 'gift:change_mind' gift.gift_number %}" method="post">
+                                    <form class="col-6" action="{% url 'gift:change_mind' gift.gift_number %}" method="post">
                                         {% csrf_token %}
-                                        <button class="btn btn-outline-success" type="submit">Change</button>
+                                        <button class="btn btn-outline-success gift-button" type="submit">Change</button>
                                     </form>
                                 {% else %}
-                                    <form>
-                                        {% csrf_token %}
-                                        <button class="btn btn-outline-success" disabled>Select</button>
-                                    </form>
+                                    <div> </div>
                                 {% endif %}
-                                <form action="{% url 'gift:comment' gift.gift_number %}" method="post">
+                                <form class="col-6" action="{% url 'gift:comment' gift.gift_number %}" method="post">
                                     {% csrf_token %}
-                                    <button class="btn btn-outline-success" type="submit">Comment</button>
+                                    <button class="btn btn-outline-success gift-button" type="submit">Comment</button>
                                 </form>
                             </div>
                         </div>
@@ -42,19 +39,16 @@
                             <p class="card-text">{{ gift.description }}</p>
                             <div class="row justify-content-between mt-auto">
                                 {% if user_has_gift %}
-                                    <form>
-                                        {% csrf_token %}
-                                        <button class="btn btn-outline-success" type="submit" disabled>Select</button>
-                                    </form>
+                                    <div> </div>
                                 {% else %}
-                                    <form action="{% url 'gift:select' gift.gift_number %}" method="post">
+                                    <form class="col-6" action="{% url 'gift:select' gift.gift_number %}" method="post">
                                         {% csrf_token %}
-                                        <button class="btn btn-outline-success" type="submit">Select</button>
+                                        <button class="btn btn-outline-success gift-button" type="submit">Select</button>
                                     </form>
                                 {% endif %}
-                                <form action="{% url 'gift:comment' gift.gift_number %}" method="post">
+                                <form class="col-6" action="{% url 'gift:comment' gift.gift_number %}" method="post">
                                     {% csrf_token %}
-                                    <button class="btn btn-outline-success" type="submit">Comment</button>
+                                    <button class="btn btn-outline-success gift-button" type="submit">Comment</button>
                                 </form>
                             </div>
                         </div>

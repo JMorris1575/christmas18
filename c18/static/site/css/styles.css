@@ -6799,6 +6799,9 @@ header img {
 header img:hover {
   opacity: 1.0; }
 
+.gift-button {
+  width: 100%; }
+
 .gift-card {
   border: 3px solid;
   border-radius: 1rem; }
