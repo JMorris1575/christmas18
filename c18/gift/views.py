@@ -35,5 +35,9 @@ class GiftChangeMindView(View):
         return redirect(reverse('gift:home'))
 
 
-class GiftCommentView(View):
-    pass
+class AddCommentView(View):
+    template_name = 'gift/comment_create.html'
+
+    def get(self, request, gift_number):
+        context = {'gift':Gift.objects.get(gift_number=gift_number)}
+        return render(request, self.template_name, context)

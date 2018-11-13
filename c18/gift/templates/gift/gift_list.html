@@ -21,7 +21,7 @@
                                 {% else %}
                                     <div> </div>
                                 {% endif %}
-                                <form class="col-6" action="{% url 'gift:comment' gift.gift_number %}" method="post">
+                                <form class="col-6" action="{% url 'gift:add_comment' gift.gift_number %}" method="get">
                                     {% csrf_token %}
                                     <button class="btn btn-outline-success gift-button" type="submit">Comment</button>
                                 </form>
@@ -46,7 +46,7 @@
                                         <button class="btn btn-outline-success gift-button" type="submit">Select</button>
                                     </form>
                                 {% endif %}
-                                <form class="col-6" action="{% url 'gift:comment' gift.gift_number %}" method="post">
+                                <form class="col-6" action="{% url 'gift:add_comment' gift.gift_number %}" method="get">
                                     {% csrf_token %}
                                     <button class="btn btn-outline-success gift-button" type="submit">Comment</button>
                                 </form>
