@@ -6823,4 +6823,5 @@ header img:hover {
 .navbar-toggler-icon {
   color: #ffdd55; }
 
-/*# sourceMappingURL=styles.css.map */
+.text-blue {
+  color: blue; }
