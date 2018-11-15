@@ -6814,6 +6814,10 @@ header img:hover {
   font-family: 'Great Vibes', cursive;
   font-size: 4rem; }
 
+.memory {
+  font-size: 1.2rem;
+  font-style: italic; }
+
 .navbar-toggler {
   border: none; }
 

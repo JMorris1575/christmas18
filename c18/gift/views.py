@@ -7,7 +7,7 @@ from .models import Gift, Comment
 import utilities
 
 class GiftListView(View):
-    template = 'gift/gift_list.html'
+    template = 'gift/gift_list_practice.html'
 
     def get(self, request):
         gifts = Gift.objects.all()

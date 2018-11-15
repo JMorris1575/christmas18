@@ -1,8 +1,8 @@
 from django.db import models
 
-class ModelNameMethod(models.Model):
+class AuthorName(models.Model):
 
-    def get_name(caller, user):
+    def get_name(caller=None, user=None):
         name = user.first_name
         if name == 'Brian':
             name += ' ' + user.last_name

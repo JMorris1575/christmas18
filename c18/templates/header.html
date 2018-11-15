@@ -19,9 +19,13 @@
                             </a>
                         </div>
                     </div>
+                    <!-- Space for memories -->
+                    <div class="row">
+                        <div class="col memory">Memories go here.</div>
+                    </div>
                     <!-- Welcome and Login/Logout Links -->
                     <div class="row align-items-center">
-                        <div class="col">
+                        <div class="col-4">
                             {% if user.is_authenticated %}
                                 <span class="h5">Welcome {{ user.first_name }}!</span>
                                 <a class="link" href="{% url 'user:logout' %}">  (Logout)</a>
@@ -30,35 +34,35 @@
                                 <a class="link" href="{% url 'user:login' %}?next={{ request.path_info }}">  (Login)</a>
                             {% endif %}
                         </div>
-                    </div>
-                    <!-- Menu Links -->
-                    <div class="col">
-                        <nav class="navbar navbar-light navbar-expand-md">
-                            <button class="navbar-toggler ml-auto px-0" type="button"
-                                    data-toggle="collapse" data-target="#navbarCollapse">
-                                <span class="navbar-toggler-icon pt-1" style="background:none">
-                                    <i class="fas fa-bars"></i>
-                                </span>
-                            </button>
-                            <div class="collapse navbar-collapse" id="navbarCollapse">
-                                <ul class="navbar-nav ml-auto text-right">
-                                    {% if user.is_staff %}
+                        <!-- Menu Links -->
+                        <div class="col">
+                            <nav class="navbar navbar-light navbar-expand-md">
+                                <button class="navbar-toggler ml-auto px-0" type="button"
+                                        data-toggle="collapse" data-target="#navbarCollapse">
+                                    <span class="navbar-toggler-icon pt-1" style="background:none">
+                                        <i class="fas fa-bars"></i>
+                                    </span>
+                                </button>
+                                <div class="collapse navbar-collapse" id="navbarCollapse">
+                                    <ul class="navbar-nav ml-auto text-right">
+                                        {% if user.is_staff %}
+                                            <li class="nav-item">
+                                                <a href="#" class="nav-link">E-mail</a>
+                                            </li>
+                                        {% endif %}
                                         <li class="nav-item">
-                                            <a href="#" class="nav-link">E-mail</a>
+                                            <a href="#" class="nav-link">Memories</a>
                                         </li>
-                                    {% endif %}
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">Memories</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">Activities</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">About</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </nav>
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">Activities</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">About</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </nav>
+                        </div>
                     </div>
                 </div>
             </div>

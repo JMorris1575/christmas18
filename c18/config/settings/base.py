@@ -51,6 +51,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'gift.apps.GiftConfig',
+    'memory.apps.MemoryConfig',
     'user.apps.UserConfig',
     'django.contrib.admin',
     'django.contrib.auth',

@@ -1,7 +1,7 @@
 from django.db import models
 from django.conf import settings
 
-from base_classes import ModelNameMethod
+from base_classes import AuthorName
 
 import os
 
@@ -31,7 +31,7 @@ class Gift(models.Model):
         return comments
 
 
-class Comment(ModelNameMethod):
+class Comment(AuthorName):
     gift = models.ForeignKey(Gift, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     comment = models.TextField()
