@@ -9,8 +9,8 @@
         <img class="card-img-top" src="{% static gift.get_image_filename %}" alt="Image of {{ gift }}">
         <div class="card-body">
             <div class="h4 text-success col-md-10 mt-3 mx-md-auto">{{ gift.description }}</div>
-            {% for comment in comments %}
-                <p class="text-blue card-text">{{ comment.comment }}</p>
+            {% for comment in gift.get_comments %}
+                <p class="col-md-10 text-blue card-text mx-md-auto">{{ comment.display }}</p>
             {% endfor %}
             <form action="{% url 'gift:add_comment' gift.gift_number %}" method="post">
                 {% csrf_token %}

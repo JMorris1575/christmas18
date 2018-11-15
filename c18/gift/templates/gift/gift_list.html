@@ -12,18 +12,21 @@
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">{{ gift }}</h5>
                             <p class="card-text">{{ gift.description }}</p>
-                            <div class="row justify-content-between mt-auto">
+                            {% for comment in gift.get_comments %}
+                                <p class="card-text text-blue">{{ comment.display }}</p>
+                            {% endfor %}
+                            <div class="mt-auto">
                                 {% if gift.receiver == user %}
-                                    <form class="col-6" action="{% url 'gift:change_mind' gift.gift_number %}" method="post">
+                                    <form action="{% url 'gift:change_mind' gift.gift_number %}" method="post">
                                         {% csrf_token %}
-                                        <button class="btn btn-outline-success gift-button" type="submit">Change</button>
+                                        <button class="btn btn-outline-success btn-block gift-button " type="submit">Change Mind</button>
                                     </form>
                                 {% else %}
                                     <div> </div>
                                 {% endif %}
-                                <form class="col-6" action="{% url 'gift:add_comment' gift.gift_number %}" method="get">
+                                <form action="{% url 'gift:add_comment' gift.gift_number %}" method="get">
                                     {% csrf_token %}
-                                    <button class="btn btn-outline-success gift-button" type="submit">Comment</button>
+                                    <button class="btn btn-outline-success btn-block gift-button" type="submit">Comment</button>
                                 </form>
                             </div>
                         </div>
@@ -37,18 +40,21 @@
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">{{ gift }}</h5>
                             <p class="card-text">{{ gift.description }}</p>
-                            <div class="row justify-content-between mt-auto">
+                            {% for comment in gift.get_comments %}
+                                <p class="card-text text-blue">{{ comment.display }}</p>
+                            {% endfor %}
+                            <div class="mt-auto">
                                 {% if user_has_gift %}
                                     <div> </div>
                                 {% else %}
-                                    <form class="col-6" action="{% url 'gift:select' gift.gift_number %}" method="post">
+                                    <form action="{% url 'gift:select' gift.gift_number %}" method="post">
                                         {% csrf_token %}
-                                        <button class="btn btn-outline-success gift-button" type="submit">Select</button>
+                                        <button class="btn btn-outline-success btn-block gift-button" type="submit">Select</button>
                                     </form>
                                 {% endif %}
-                                <form class="col-6" action="{% url 'gift:add_comment' gift.gift_number %}" method="get">
+                                <form action="{% url 'gift:add_comment' gift.gift_number %}" method="get">
                                     {% csrf_token %}
-                                    <button class="btn btn-outline-success gift-button" type="submit">Comment</button>
+                                    <button class="btn btn-outline-success btn-block gift-button" type="submit">Comment</button>
                                 </form>
                             </div>
                         </div>
