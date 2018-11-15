@@ -19,13 +19,9 @@
                             </a>
                         </div>
                     </div>
-                    <!-- Space for memories -->
-                    <div class="row">
-                        <div class="col memory">Memories go here.</div>
-                    </div>
                     <!-- Welcome and Login/Logout Links -->
                     <div class="row align-items-center">
-                        <div class="col-4">
+                        <div class="col-6">
                             {% if user.is_authenticated %}
                                 <span class="h5">Welcome {{ user.first_name }}!</span>
                                 <a class="link" href="{% url 'user:logout' %}">  (Logout)</a>
@@ -36,7 +32,7 @@
                         </div>
                         <!-- Menu Links -->
                         <div class="col">
-                            <nav class="navbar navbar-light navbar-expand-md">
+                            <nav class="navbar navbar-light navbar-expand-lg">
                                 <button class="navbar-toggler ml-auto px-0" type="button"
                                         data-toggle="collapse" data-target="#navbarCollapse">
                                     <span class="navbar-toggler-icon pt-1" style="background:none">
@@ -68,5 +64,18 @@
             </div>
         </div>
     </header>
+    <!-- Memory Block -->
+    {% if user.is_authenticated %}
+        <div class="container">
+            <div class="row">
+                {% if memory %}
+                    <div class="col memory p-1 mt-2 mx-3">
+                            <span>{{ memory.author }}</span>
+                            <span>{{ memory }}</span>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
 
 {% endblock %}

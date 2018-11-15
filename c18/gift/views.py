@@ -11,7 +11,8 @@ class GiftListView(View):
 
     def get(self, request):
         gifts = Gift.objects.all()
-        context = {'gifts': gifts, 'user_has_gift': utilities.user_has_gift(request.user)}
+        context = {'gifts': gifts, 'user_has_gift': utilities.user_has_gift(request.user),
+                   'memory': utilities.get_random_memory()}
         return render(request, self.template, context)
 
 
@@ -41,7 +42,7 @@ class AddCommentView(View):
     def get(self, request, gift_number):
         gift = Gift.objects.get(gift_number=gift_number)
         comments = gift.comment_set.all()
-        context = {'gift':gift, 'comments':comments}
+        context = {'gift':gift, 'comments':comments, 'memory':utilities.get_random_memory()}
         return render(request, self.template_name, context)
 
     def post(self, request, gift_number):

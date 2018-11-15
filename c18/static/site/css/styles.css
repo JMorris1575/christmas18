@@ -6815,8 +6815,11 @@ header img:hover {
   font-size: 4rem; }
 
 .memory {
+  font-family: serif;
   font-size: 1.2rem;
-  font-style: italic; }
+  font-style: italic;
+  border: 2px solid #cc0000;
+  color: #28a745; }
 
 .navbar-toggler {
   border: none; }
