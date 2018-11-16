@@ -1,3 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
+from django.views import View
 
-# Create your views here.
+class CustomLoginView(View):
+
+    template_name = 'user/login.html'
+
+    def get(self, request):
+        print(request.user)
+        return redirect(reverse('user:login'))
+
