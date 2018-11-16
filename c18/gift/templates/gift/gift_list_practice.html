@@ -2,65 +2,78 @@
 {% load static %}
 
 {% block content %}
-    <div class="row equal">
+    <div class="row p-3">
         {% for gift in gifts %}
-            {% if gift.selected %}
-                <!-- Section for Selected Gifts -->
-                <div class="col-sm-6 col-md-4 col-lg-3 my-3">
-                    <div class="card gift-card border-primary h-100">
-                        <img class="card-img-top" src="{% static gift.get_image_filename %}" alt="Image of {{ gift }}">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ gift }}</h5>
-                            <p class="card-text">{{ gift.description }}</p>
-                            {% for comment in gift.get_comments %}
-                                <p class="card-text text-blue">{{ comment.display }}</p>
-                            {% endfor %}
-                            <div class="mt-auto">
-                                {% if gift.receiver == user %}
-                                    <form action="{% url 'gift:change_mind' gift.gift_number %}" method="post">
-                                        {% csrf_token %}
-                                        <button class="btn btn-outline-success btn-block gift-button " type="submit">Change Mind</button>
-                                    </form>
-                                {% else %}
-                                    <div> </div>
-                                {% endif %}
-                                <form action="{% url 'gift:add_comment' gift.gift_number %}" method="get">
-                                    {% csrf_token %}
-                                    <button class="btn btn-outline-success btn-block gift-button" type="submit">Comment</button>
-                                </form>
-                            </div>
-                        </div>
+            <div class="card col-12 mb-3">
+                <div class="row">
+                    <div class="col-3 pl-0">
+                        {% if gift.selected %}
+                            <img class="w-100 border border-primary p-1 d-none d-md-block" src="{% static gift.get_image_filename %}" alt="Image of {{ gift }}">
+                            <h4 class="text-primary">{{ gift }}</h4>
+                        {% else %}
+                            <img class="w-100 border border-success p-1 d-none d-md-block" src="{% static gift.get_image_filename %}" alt="Image of {{ gift }}">
+                            <h4 class="text-success">{{ gift }}</h4>
+                        {% endif %}
                     </div>
                 </div>
-            {% else %}
-                <!-- Section for Unselected Gifts -->
-                <div class="col-sm-6 col-md-4 col-lg-3 my-3">
-                    <div class="card gift-card border-success h-100">
-                        <img class="card-img-top" src="{% static gift.get_image_filename %}" alt="Image of {{ gift }}">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ gift }}</h5>
-                            <p class="card-text">{{ gift.description }}</p>
-                            {% for comment in gift.get_comments %}
-                                <p class="card-text text-blue">{{ comment.display }}</p>
-                            {% endfor %}
-                            <div class="mt-auto">
-                                {% if user_has_gift %}
-                                    <div> </div>
-                                {% else %}
-                                    <form action="{% url 'gift:select' gift.gift_number %}" method="post">
-                                        {% csrf_token %}
-                                        <button class="btn btn-outline-success btn-block gift-button" type="submit">Select</button>
-                                    </form>
-                                {% endif %}
-                                <form action="{% url 'gift:add_comment' gift.gift_number %}" method="get">
-                                    {% csrf_token %}
-                                    <button class="btn btn-outline-success btn-block gift-button" type="submit">Comment</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
+            </div>
+            <!--{% if gift.selected %}-->
+                <!--&lt;!&ndash; Section for Selected Gifts &ndash;&gt;-->
+                <!--<div class="col-sm-6 col-md-4 col-lg-3 my-3">-->
+                    <!--<div class="card gift-card border-primary h-100">-->
+                        <!--<img class="card-img-top" src="{% static gift.get_image_filename %}" alt="Image of {{ gift }}">-->
+                        <!--<div class="card-body">-->
+                            <!--<h5 class="card-title">{{ gift }}</h5>-->
+                            <!--<p class="card-text">{{ gift.description }}</p>-->
+                            <!--{% for comment in gift.get_comments %}-->
+                                <!--<p class="card-text text-blue">{{ comment.display }}</p>-->
+                            <!--{% endfor %}-->
+                            <!--<div class="mt-auto">-->
+                                <!--{% if gift.receiver == user %}-->
+                                    <!--<form action="{% url 'gift:change_mind' gift.gift_number %}" method="post">-->
+                                        <!--{% csrf_token %}-->
+                                        <!--<button class="btn btn-outline-success btn-block gift-button " type="submit">Change Mind</button>-->
+                                    <!--</form>-->
+                                <!--{% else %}-->
+                                    <!--<div> </div>-->
+                                <!--{% endif %}-->
+                                <!--<form action="{% url 'gift:add_comment' gift.gift_number %}" method="get">-->
+                                    <!--{% csrf_token %}-->
+                                    <!--<button class="btn btn-outline-success btn-block gift-button" type="submit">Comment</button>-->
+                                <!--</form>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--{% else %}-->
+                <!--&lt;!&ndash; Section for Unselected Gifts &ndash;&gt;-->
+                <!--<div class="col-sm-6 col-md-4 col-lg-3 my-3">-->
+                    <!--<div class="card gift-card border-success h-100">-->
+                        <!--<img class="card-img-top" src="{% static gift.get_image_filename %}" alt="Image of {{ gift }}">-->
+                        <!--<div class="card-body">-->
+                            <!--<h5 class="card-title">{{ gift }}</h5>-->
+                            <!--<p class="card-text">{{ gift.description }}</p>-->
+                            <!--{% for comment in gift.get_comments %}-->
+                                <!--<p class="card-text text-blue">{{ comment.display }}</p>-->
+                            <!--{% endfor %}-->
+                            <!--<div class="mt-auto">-->
+                                <!--{% if user_has_gift %}-->
+                                    <!--<div> </div>-->
+                                <!--{% else %}-->
+                                    <!--<form action="{% url 'gift:select' gift.gift_number %}" method="post">-->
+                                        <!--{% csrf_token %}-->
+                                        <!--<button class="btn btn-outline-success btn-block gift-button" type="submit">Select</button>-->
+                                    <!--</form>-->
+                                <!--{% endif %}-->
+                                <!--<form action="{% url 'gift:add_comment' gift.gift_number %}" method="get">-->
+                                    <!--{% csrf_token %}-->
+                                    <!--<button class="btn btn-outline-success btn-block gift-button" type="submit">Comment</button>-->
+                                <!--</form>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--{% endif %}-->
         {% endfor %}
     </div>
 {% endblock %}
