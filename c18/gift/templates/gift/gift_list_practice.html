@@ -7,16 +7,16 @@
             <div class="card col-12 mb-3">
                 <div class="row">
                     <!-- Left Column or Top Line: gift image and caption -->
-                    <div class="col-sm-3 pl-0">
+                    <div class="col-sm-4 col-md-3 pl-0">
                         {% if gift.selected %}
-                            <img class="w-100 border border-primary p-1 d-none d-md-block"
+                            <img class="w-100 border border-primary p-1 d-none d-sm-block"
                                  src="{% static gift.get_image_filename %}" alt="Image of {{ gift }}">
-                            <h4 class="text-primary">{{ gift }}</h4>
+                            <h4 class="text-primary">{{ gift }} <a class="d-inline d-sm-none" href="#">See it...</a></h4>
                             <p class="text-primary mx-auto">Selected by {{ gift.receiver_name }}</p>
                         {% else %}
-                            <img class="w-100 border border-success p-1 d-none d-md-block"
+                            <img class="w-100 border border-success p-1 d-none d-sm-block"
                                  src="{% static gift.get_image_filename %}" alt="Image of {{ gift }}">
-                            <h4 class="text-success">{{ gift }}</h4>
+                            <h4 class="text-success">{{ gift }} <a class="d-inline d-sm-none" href="#">See it...</a></h4>
                             <p class="text-success mx-auto">Unselected</p>
                         {% endif %}
                     </div>
