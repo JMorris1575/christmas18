@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 
 from base_classes import AuthorName
+from user.models import get_adjusted_name
 
 import os
 
@@ -29,6 +30,9 @@ class Gift(models.Model):
     def get_comments(self):
         comments = Comment.objects.filter(gift=self)
         return comments
+
+    def receiver_name(self):
+        return get_adjusted_name(self.receiver)
 
 
 class Comment(AuthorName):

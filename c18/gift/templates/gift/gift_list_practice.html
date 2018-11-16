@@ -6,14 +6,34 @@
         {% for gift in gifts %}
             <div class="card col-12 mb-3">
                 <div class="row">
-                    <div class="col-3 pl-0">
+                    <!-- Left Column or Top Line: gift image and caption -->
+                    <div class="col-sm-3 pl-0">
                         {% if gift.selected %}
-                            <img class="w-100 border border-primary p-1 d-none d-md-block" src="{% static gift.get_image_filename %}" alt="Image of {{ gift }}">
+                            <img class="w-100 border border-primary p-1 d-none d-md-block"
+                                 src="{% static gift.get_image_filename %}" alt="Image of {{ gift }}">
                             <h4 class="text-primary">{{ gift }}</h4>
+                            <p class="text-primary mx-auto">Selected by {{ gift.receiver_name }}</p>
                         {% else %}
-                            <img class="w-100 border border-success p-1 d-none d-md-block" src="{% static gift.get_image_filename %}" alt="Image of {{ gift }}">
+                            <img class="w-100 border border-success p-1 d-none d-md-block"
+                                 src="{% static gift.get_image_filename %}" alt="Image of {{ gift }}">
                             <h4 class="text-success">{{ gift }}</h4>
+                            <p class="text-success mx-auto">Unselected</p>
                         {% endif %}
+                    </div>
+
+                    <!-- Middle Column or Middle Line: gift clue and comments -->
+                    <div class="col-sm">
+                        <p class="text-success">{{ gift.description }}</p>
+                        {% for comment in gift.get_comments %}
+                            {% if comment.user == user %}
+                                <p class="comment">
+                                    {{ comment.display }}
+                                    <a href="#"> (Edit...)</a>
+                                </p>
+                            {% else %}
+                                <p class="comment">{{ comment.display }}</p>
+                            {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
             </div>
