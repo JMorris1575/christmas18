@@ -20,7 +20,7 @@
                         </div>
                     </div>
                     <!-- Welcome and Login/Logout Links -->
-                    <div class="row align-items-center">
+                    <div class="row align-items-top">
                         <div class="col-6">
                             {% if user.is_authenticated %}
                                 <span class="h5">Welcome {{ user.first_name }}!</span>
@@ -32,8 +32,8 @@
                         </div>
                         <!-- Menu Links -->
                         <div class="col">
-                            <nav class="navbar navbar-light navbar-expand-lg">
-                                <button class="navbar-toggler ml-auto px-0" type="button"
+                            <nav class="navbar navbar-light navbar-expand-lg pt-0">
+                                <button class="navbar-toggler ml-auto p-0" type="button"
                                         data-toggle="collapse" data-target="#navbarCollapse">
                                     <span class="navbar-toggler-icon pt-1" style="background:none">
                                         <i class="fas fa-bars"></i>
