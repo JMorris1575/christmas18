@@ -6,7 +6,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-2 d-none d-md-inline">
-                    <a href="#" class="brand">
+                    <a href="{% url 'gift:home' %}" class="brand">
                         <img src="{% static 'images/ThreeOrnamentsAlpha.png' %}" class="img-fluid">
                     </a>
                 </div>
@@ -14,7 +14,7 @@
                     <!-- Banner Heading -->
                     <div class="row">
                         <div class="col">
-                            <a href="#">
+                            <a href="{% url 'gift:home' %}">
                                 <h1 class="header-text d-inline">Christmas 2018</h1>
                             </a>
                         </div>
@@ -69,7 +69,7 @@
         <div class="container">
             <div class="row">
                 {% if memory %}
-                    <div class="col memory p-3 mt-2 mx-3">
+                    <div class="col memory p-3 m-3">
                             <span>{{ memory.author }}</span>
                             <span>{{ memory }}</span>
                     </div>

@@ -7,7 +7,7 @@ from .models import Gift, Comment
 import utilities
 
 class GiftListView(View):
-    template = 'gift/gift_list_practice.html'
+    template = 'gift/gift_list.html'
 
     def get(self, request):
         gifts = Gift.objects.all()
@@ -47,9 +47,18 @@ class AddCommentView(View):
 
     def post(self, request, gift_number):
         gift = Gift.objects.get(gift_number=gift_number)
-        # Needs a check for an empty request.POST['comment_text]. Should only save comment if there is one.
+        # Needs a check for an empty request.POST['comment_text']. Should only save comment if there is one.
         # Otherwise is should go back to the create_comment page with an error message
         # The create_comment page should also have a cancel button to escape without adding a comment.
         new_comment = Comment(gift=gift, user=request.user, comment=request.POST['comment_text'])
         new_comment.save()
         return redirect('gift:home')
+
+class EditCommentView(View):
+    template_name = 'gift/comment_edit.html'
+
+    def get(self, request, gift_number):
+        gift= Gift.objects.get(gift_number=gift_number)
+        comments = gift.comment_set.all()
+        context = {'gift':gift, 'comments':comments, 'memory':utilities.get_random_memory()}
+        return render(request, self.template_name, context)

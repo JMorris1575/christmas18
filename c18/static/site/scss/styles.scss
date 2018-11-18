@@ -65,12 +65,17 @@ header .nav-link {
     font-size: 4rem;
 }
 
+.info-box {
+    padding: 1rem;
+}
+
 .memory {
     font-family: serif;
     font-size: 1.2rem;
     font-style: italic;
-    border: 2px solid $primary;
+    border: 1px solid $success;
     color: $success;
+    background: white url('../images/faux-parchment-texture-by-brewster.jpg') repeat-x;
 }
 
 .navbar-toggler {
