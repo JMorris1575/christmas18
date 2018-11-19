@@ -6827,7 +6827,8 @@ header .nav-link {
   font-size: 4rem; }
 
 .info-box {
-  padding: 1rem; }
+  padding: 1rem;
+  border: 3px solid #28a745; }
 
 .memory {
   font-family: serif;

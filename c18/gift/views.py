@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
+from django.contrib.auth import PermissionDenied
 
 from .models import Gift, Comment
 
@@ -57,8 +58,29 @@ class AddCommentView(View):
 class EditCommentView(View):
     template_name = 'gift/comment_edit.html'
 
-    def get(self, request, gift_number):
+    def get(self, request, gift_number, comment_id):
         gift= Gift.objects.get(gift_number=gift_number)
         comments = gift.comment_set.all()
-        context = {'gift':gift, 'comments':comments, 'memory':utilities.get_random_memory()}
-        return render(request, self.template_name, context)
+        try:
+            comment_to_edit = Comment.objects.get(pk=comment_id)
+        except:
+            return redirect('gift:home')
+        if request.user == comment_to_edit.user:
+            context = {'gift':gift, 'comments':comments, 'comment_to_edit':comment_to_edit,
+                   'memory':utilities.get_random_memory()}
+            return render(request, self.template_name, context)
+        else:
+            raise PermissionDenied
+
+    def post(self, request, gift_number, comment_id):
+        comment = Comment.objects.get(pk=comment_id)
+        if request.user == comment.user:
+            comment.comment = request.POST['comment_text']
+            comment.save()
+            return redirect('gift:home')
+        else:
+            raise PermissionDenied
+
+
+class DeleteCommentView(View):
+    pass
