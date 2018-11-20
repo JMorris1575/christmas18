@@ -1,32 +1,23 @@
-{% extends parent_template|default:"base.html" %}
+{% extends parent_template|default:"gift/base_gift_detail.html" %}
 {% load static %}
 
-{% block content %}
-    <div class="card col col-md-8 mx-auto mb-3 border-primary px-0">
-        <img class="card-img-top" src="{% static gift.get_image_filename %}" alt="Image of {{ gift }}">
-        <div class="card-body">
-            {% for comment in comments %}
-                <p class="card-text comment">{{ comment.display }}</p>
-            {% endfor %}
-            <div class="info-box mb-3">
-                <h5 class="card-title">Edit or Delete Your Remark</h5>
-                <p class="card-text">
-                    To edit your remark, enter the new text in the entry box below and click the 'Save Changes' button.
-                    To delete it click the 'Delete...' button and confirm the deletion on the page that appears. To
-                    change nothing and return to the previous page simply click the 'Cancel' button.
-                </p>
-                <form action="{% url 'gift:edit_comment' gift.gift_number comment_to_edit.pk %}" method="post">
-                    {% csrf_token %}
-                    <textarea class="col mb-3" id="comment" name="comment_text">{{ comment_to_edit.comment }}</textarea>
-                    <div class="row no-gutters">
-                        <button class="btn btn-outline-success col-md-4" type="submit">Save Changes</button>
-                        <a class="btn btn-outline-success col-md-4" href="{% url 'gift:delete_comment' comment_to_edit.pk %}">
-                            Delete...
-                        </a>
-                        <a class="btn btn-outline-success col-md-4" href="#">Cancel</a>
-                    </div>
-                </form>
-            </div>
+{% block gift-detail-page-specific-content %}
+    <h5 class="card-title">Edit or Delete Your Remark</h5>
+    <p class="card-text">
+        To edit your remark, enter the new text in the entry box below and click the 'Save Changes' button.
+        To delete it click the 'Delete...' button and confirm the deletion on the page that appears. To
+        change nothing and return to the previous page simply click the 'Cancel' button.
+    </p>
+    <form action="{% url 'gift:edit_comment' gift.gift_number selected_comment.pk %}" method="post">
+        {% csrf_token %}
+        <textarea class="col mb-3" id="comment" name="comment_text">{{ selected_comment.comment }}</textarea>
+        <div class="row no-gutters">
+            <button class="btn btn-outline-success col-md-4" type="submit">Save Changes</button>
+            <a class="btn btn-outline-success col-md-4"
+               href="{% url 'gift:delete_comment' gift.gift_number selected_comment.pk %}">
+                Delete...
+            </a>
+            <a class="btn btn-outline-success col-md-4" href="{% url 'gift:home' %}">Cancel</a>
         </div>
-    </div>
+    </form>
 {% endblock %}

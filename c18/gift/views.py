@@ -62,11 +62,11 @@ class EditCommentView(View):
         gift= Gift.objects.get(gift_number=gift_number)
         comments = gift.comment_set.all()
         try:
-            comment_to_edit = Comment.objects.get(pk=comment_id)
+            selected_comment = Comment.objects.get(pk=comment_id)
         except:
             return redirect('gift:home')
-        if request.user == comment_to_edit.user:
-            context = {'gift':gift, 'comments':comments, 'comment_to_edit':comment_to_edit,
+        if request.user == selected_comment.user:
+            context = {'gift':gift, 'comments':comments, 'selected_comment':selected_comment,
                    'memory':utilities.get_random_memory()}
             return render(request, self.template_name, context)
         else:
@@ -83,4 +83,32 @@ class EditCommentView(View):
 
 
 class DeleteCommentView(View):
-    pass
+    template_name = 'gift/comment_delete.html'
+
+    def get(self, request, gift_number, comment_id):
+        try:
+            gift = Gift.objects.get(gift_number=gift_number)
+            comment = Comment.objects.get(pk=comment_id)
+        except:
+            return redirect('gift:home')
+        comments = gift.comment_set.all()
+        if request.user == comment.user:
+            context = {'gift':gift, 'comments':comments, 'selected_comment':comment,
+                       'memory':utilities.get_random_memory()}
+            return render(request, self.template_name, context)
+
+    def post(self, request, gift_number, comment_id):
+        try:
+            gift = Gift.objects.get(gift_number=gift_number)
+            comment = Comment.objects.get(pk=comment_id)
+        except:
+            return redirect('gift:home')
+        if request.POST['button'] != 'delete':
+            return redirect('gift:edit_comment', gift.gift_number, comment_id)
+        else:
+            if request.user == comment.user:
+                comment.delete()
+                return redirect('gift:home')
+            else:
+                raise PermissionDenied
+

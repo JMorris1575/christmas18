@@ -1,0 +1,21 @@
+{% extends parent_template|default:"base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="card col col-md-8 mx-auto mb-3 border-primary px-0">
+        <img class="card-img-top" src="{% static gift.get_image_filename %}" alt="Image of {{ gift }}">
+        <div class="card-body">
+            {% for comment in comments %}
+                {% if comment == selected_comment %}
+                    <p class="card-text comment font-weight-bold">{{ comment.display }}</p>
+                {% else %}
+                    <p class="card-text comment">{{ comment.display }}</p>
+                {% endif %}
+            {% endfor %}
+            <div class="info-box mb-3">
+                {% block gift-detail-page-specific-content %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
