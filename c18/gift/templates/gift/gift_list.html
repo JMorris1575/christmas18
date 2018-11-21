@@ -14,7 +14,7 @@
                                      src="{% static gift.get_image_filename %}" alt="Image of {{ gift }}">
                             </a>
                             <h4 class="text-primary">{{ gift }}
-                                <a class="d-inline d-sm-none" href="{% url 'gift:gift_detail' gift.gift_number">
+                                <a class="d-inline d-sm-none" href="{% url 'gift:gift_detail' gift.gift_number %}">
                                     See it...
                                 </a>
                             </h4>
