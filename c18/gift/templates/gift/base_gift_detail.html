@@ -9,7 +9,10 @@
                 {% if comment == selected_comment %}
                     <p class="card-text comment font-weight-bold">{{ comment.display }}</p>
                 {% else %}
-                    <p class="card-text comment">{{ comment.display }}</p>
+                    <p class="card-text comment">
+                        {{ comment.display }}
+                        <a href="{% url 'gift:edit_comment' gift.gift_number comment.pk %}?next={{ next_url }}"> (Edit...)</a>
+                    </p>
                 {% endif %}
             {% endfor %}
             <div class="info-box mb-3">

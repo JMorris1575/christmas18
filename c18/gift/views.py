@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
 from django.contrib.auth import PermissionDenied
+from django.utils.http import is_safe_url
 
 from .models import Gift, Comment
 
@@ -14,6 +15,20 @@ class GiftListView(View):
         gifts = Gift.objects.all()
         context = {'gifts': gifts, 'user_has_gift': utilities.user_has_gift(request.user),
                    'memory': utilities.get_random_memory()}
+        return render(request, self.template, context)
+
+
+class GiftDetailView(View):
+    template = 'gift/gift_detail.html'
+
+    def get(self, request, gift_number):
+        try:
+            gift = Gift.objects.get(gift_number=gift_number)
+        except:
+            return redirect('gift:home')
+        comments = gift.comment_set.all()
+        next_url = request.path
+        context = {'gift': gift, 'comments':comments, 'next_url':next_url, 'memory':utilities.get_random_memory()}
         return render(request, self.template, context)
 
 
@@ -59,14 +74,19 @@ class EditCommentView(View):
     template_name = 'gift/comment_edit.html'
 
     def get(self, request, gift_number, comment_id):
-        gift= Gift.objects.get(gift_number=gift_number)
-        comments = gift.comment_set.all()
         try:
+            gift = Gift.objects.get(gift_number=gift_number)
             selected_comment = Comment.objects.get(pk=comment_id)
         except:
             return redirect('gift:home')
+        comments = gift.comment_set.all()
+        next_url = request.GET.get('next', '')
+        print('next_url = ', next_url)
+        if next_url:
+            if not is_safe_url(next_url, request.get_host()):
+                next_url = ''
         if request.user == selected_comment.user:
-            context = {'gift':gift, 'comments':comments, 'selected_comment':selected_comment,
+            context = {'gift':gift, 'comments':comments, 'selected_comment':selected_comment, 'next_url':next_url,
                    'memory':utilities.get_random_memory()}
             return render(request, self.template_name, context)
         else:
@@ -103,7 +123,11 @@ class DeleteCommentView(View):
             comment = Comment.objects.get(pk=comment_id)
         except:
             return redirect('gift:home')
-        if request.POST['button'] != 'delete':
+        if request.POST['button'] != 'delete':      # user clicked the cancel button
+            next_url = request.GET.get('next', '')
+            if next_url:
+                if is_safe_url(next_url, request.get_host()):
+                    return redirect(next_url)
             return redirect('gift:edit_comment', gift.gift_number, comment_id)
         else:
             if request.user == comment.user:

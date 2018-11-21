@@ -9,14 +9,26 @@
                     <!-- Left Column or Top Line: gift image and caption -->
                     <div class="col-sm-4 col-md-3 pl-0">
                         {% if gift.selected %}
-                            <img class="w-100 border border-primary gift-img d-none d-sm-block"
-                                 src="{% static gift.get_image_filename %}" alt="Image of {{ gift }}">
-                            <h4 class="text-primary">{{ gift }} <a class="d-inline d-sm-none" href="#">See it...</a></h4>
+                            <a href="{% url 'gift:gift_detail' gift.gift_number %}" title="Click for larger image.">
+                                <img class="w-100 border border-primary gift-img d-none d-sm-block"
+                                     src="{% static gift.get_image_filename %}" alt="Image of {{ gift }}">
+                            </a>
+                            <h4 class="text-primary">{{ gift }}
+                                <a class="d-inline d-sm-none" href="{% url 'gift:gift_detail' gift.gift_number">
+                                    See it...
+                                </a>
+                            </h4>
                             <p class="text-primary mx-auto">Selected by {{ gift.receiver_name }}</p>
                         {% else %}
-                            <img class="w-100 border border-success gift-img d-none d-sm-block"
-                                 src="{% static gift.get_image_filename %}" alt="Image of {{ gift }}">
-                            <h4 class="text-success">{{ gift }} <a class="d-inline d-sm-none" href="#">See it...</a></h4>
+                            <a href="{% url 'gift:gift_detail' gift.gift_number %}" title="Click for larger image.">
+                                <img class="w-100 border border-success gift-img d-none d-sm-block"
+                                     src="{% static gift.get_image_filename %}" alt="Image of {{ gift }}">
+                            </a>
+                            <h4 class="text-success">{{ gift }}
+                                <a class="d-inline d-sm-none" href="{% url 'gift:gift_detail' gift.gift_number %}">
+                                    See it...
+                                </a>
+                            </h4>
                             <p class="text-success mx-auto">Unselected</p>
                         {% endif %}
                     </div>
