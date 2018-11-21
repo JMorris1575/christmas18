@@ -81,7 +81,6 @@ class EditCommentView(View):
             return redirect('gift:home')
         comments = gift.comment_set.all()
         next_url = request.GET.get('next', '')
-        print('next_url = ', next_url)
         if next_url:
             if not is_safe_url(next_url, request.get_host()):
                 next_url = ''
@@ -112,8 +111,12 @@ class DeleteCommentView(View):
         except:
             return redirect('gift:home')
         comments = gift.comment_set.all()
+        next_url = request.GET.get('next', '')
+        if next_url:
+            if not is_safe_url(next_url, request.get_host()):
+                next_url = ''
         if request.user == comment.user:
-            context = {'gift':gift, 'comments':comments, 'selected_comment':comment,
+            context = {'gift':gift, 'comments':comments, 'selected_comment':comment, 'next_url':next_url,
                        'memory':utilities.get_random_memory()}
             return render(request, self.template_name, context)
 
@@ -124,10 +127,14 @@ class DeleteCommentView(View):
         except:
             return redirect('gift:home')
         if request.POST['button'] != 'delete':      # user clicked the cancel button
-            next_url = request.GET.get('next', '')
+            print('request.POST = ', request.POST)
+            next_url = request.POST.get('next', '')
+            print('In DeleteCommentView.post next_url = ', next_url)
             if next_url:
                 if is_safe_url(next_url, request.get_host()):
+                    print('It was safe.')
                     return redirect(next_url)
+                print('It was not safe.')
             return redirect('gift:edit_comment', gift.gift_number, comment_id)
         else:
             if request.user == comment.user:
