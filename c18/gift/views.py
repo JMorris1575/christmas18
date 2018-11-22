@@ -28,14 +28,20 @@ class GiftDetailView(View):
             return redirect('gift:home')
         comments = gift.comment_set.all()
         next_url = request.path
-        context = {'gift': gift, 'comments':comments, 'next_url':next_url, 'memory':utilities.get_random_memory()}
+        context = {'gift': gift, 'comments':comments, 'user_has_gift':utilities.user_has_gift(request.user),
+                   'next_url':next_url, 'memory':utilities.get_random_memory()}
         return render(request, self.template, context)
 
 
 class GiftSelectView(View):
 
     def post(self, request, gift_number):
-        current_gift = Gift.objects.get(gift_number=gift_number)
+        try:
+            current_gift = Gift.objects.get(gift_number=gift_number)
+        except:
+            return redirect('gift:home')
+        if request.POST['button'] == 'remark':
+            return redirect('gift:add_comment')
         current_gift.selected = True
         current_gift.receiver = request.user
         current_gift.save()
@@ -45,6 +51,12 @@ class GiftSelectView(View):
 class GiftChangeMindView(View):
 
     def post(self, request, gift_number):
+        try:
+            current_gift = Gift.objects.get(gift_number=gift_number)
+        except:
+            return redirect('gift:home')
+        if request.POST['button'] == 'remark':
+            return redirect('gift:add_comment')
         current_gift = Gift.objects.get(gift_number=gift_number)
         current_gift.selected = False
         current_gift.receiver = None
