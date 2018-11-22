@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'gift.apps.GiftConfig',
     'memory.apps.MemoryConfig',
     'user.apps.UserConfig',
+    'mail.apps.MailConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
