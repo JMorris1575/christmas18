@@ -4,7 +4,7 @@
 {% block content %}
     <div class="row px-3">
         {% for gift in gifts %}
-            <div class="card col-12 mb-3">
+            <div class="card col-12 pb-3 mb-3">
                 <div class="row">
                     <!-- Left Column or Top Line: gift image and caption -->
                     <div class="col-sm-4 col-md-3 pl-0">
@@ -36,20 +36,25 @@
                     <!-- Middle Column or Middle Line: gift clue and comments -->
                     <div class="col-sm">
                         <p class="text-success">{{ gift.description }}</p>
-                        {% for comment in gift.get_comments %}
-                            {% if comment.user == user %}
-                                <p class="comment">
-                                    {{ comment.display }}
-                                    <a href="{% url 'gift:edit_comment' gift.gift_number comment.pk %}"> (Edit...)</a>
-                                </p>
-                            {% else %}
-                                <p class="comment">{{ comment.display }}</p>
-                            {% endif %}
-                        {% endfor %}
+                        {% if gift.get_comments %}
+                            <a data-toggle="collapse" href="#Gift{{ gift.gift_number }}_remarks">Toggle remarks...</a>
+                            <div class="collapse" id="Gift{{ gift.gift_number }}_remarks">
+                                {% for comment in gift.get_comments %}
+                                    {% if comment.user == user %}
+                                        <p class="comment">
+                                            {{ comment.display }}
+                                            <a href="{% url 'gift:edit_comment' gift.gift_number comment.pk %}"> (Edit...)</a>
+                                        </p>
+                                    {% else %}
+                                        <p class="comment">{{ comment.display }}</p>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
                     </div>
 
                     <!-- Third Column or Third Line: Buttons -->
-                    <div class="col-sm-3 col-md-2">
+                    <div class="col-sm-3 col-md-2 mt-3">
                         {% if gift.selected %}
                             <form action="{% url 'gift:change_mind' gift.gift_number %}" method="post">
                                 {% csrf_token %}

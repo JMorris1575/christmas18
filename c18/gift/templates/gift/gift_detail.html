@@ -26,12 +26,12 @@
                     {% else %}
                         <div class="col-sm-4"></div>        <!-- place holder for missing button -->
                     {% endif %}
-                    <button class="btn btn-outline-success btn-lg col-sm-4 mt-3 mt-sm-0"
+                    <button class="btn btn-outline-success btn-lg col-sm-4 mt-3 mt-sm-0 mx-3"
                             type="submit" name="button" value="remark">Add Remark</button>
                 </div>
             </form>
         {% endif %}
         <div class="text-center">
-            <a class="btn btn-outline-success" href="{% url 'gift:home' %}">Return to Gift List</a>
+            <a class="btn btn-outline-success btn-block btn-lg" href="{% url 'gift:home' %}">Return to Gift List</a>
         </div>
 {% endblock %}
