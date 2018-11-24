@@ -10,9 +10,14 @@
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-md-3">
+                        <div class="text-success form-group pl-3">
+                            <input type="checkbox" class="form-check-input" id="select_all">
+                            <label class="form-check-label" for="select_all">Select All</label>
+                        </div>
                         {% for user in users %}
                             <div class="text-success form-group pl-3">
-                                <input type="checkbox" class="form-check-input" name="recipients" value="{{ user }}" id="{{ user }}"/>
+                                <input type="checkbox" class="form-check-input family-member"
+                                       name="recipients" value="{{ user }}" id="{{ user }}"/>
                                 <label class="form-check-label" for="{{ user }}">
                                     {{ user.first_name }} {{ user.last_name }}
                                 </label>
@@ -61,4 +66,32 @@
             </form>
         </div>
     </div>
+{% endblock %}
+
+{% block body %}
+    <script>
+
+        function toggleSelected(button) {
+            // toggles the 'selected' class in the given button, returns true if selected, false if not selected
+            if ($(button).hasClass('selected')) {
+                $(button).removeClass('selected');
+                return false;
+            } else {
+                $(button).addClass('selected');
+                return true;
+            }; // end if
+        }; // end toggleSelected
+
+        $(document).ready(function() {
+            $('#select_all').click(function() {
+                var selected = toggleSelected(this); // toggles 'selected' class and returns true if it is set
+                $(this).blur(); // turns off the highlighting of the clicked button
+                $('.family-member').each(function() {
+                    $(this).prop('checked', selected); // sets the checkbox to status of button
+                 });    // end family-member each
+             });    // end select_all click
+         });    // end document ready
+
+    </script>
+
 {% endblock %}
