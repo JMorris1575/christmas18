@@ -139,14 +139,10 @@ class DeleteCommentView(View):
         except:
             return redirect('gift:home')
         if request.POST['button'] != 'delete':      # user clicked the cancel button
-            print('request.POST = ', request.POST)
             next_url = request.POST.get('next', '')
-            print('In DeleteCommentView.post next_url = ', next_url)
             if next_url:
                 if is_safe_url(next_url, request.get_host()):
-                    print('It was safe.')
                     return redirect(next_url)
-                print('It was not safe.')
             return redirect('gift:edit_comment', gift.gift_number, comment_id)
         else:
             if request.user == comment.user:

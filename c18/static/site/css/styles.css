@@ -6808,6 +6808,9 @@ header .nav-link {
   color: blue;
   margin-bottom: 0.5rem; }
 
+.fine-print {
+  font-size: 75%; }
+
 .gift-button {
   width: 100%; }
 

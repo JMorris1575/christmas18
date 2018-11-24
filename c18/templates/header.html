@@ -43,7 +43,10 @@
                                     <ul class="navbar-nav ml-auto text-right">
                                         {% if user.is_staff %}
                                             <li class="nav-item">
-                                                <a href="{% url 'mail:manage-mail' %}" class="nav-link">E-mail</a>
+                                                <a href="{% url 'mail:send-mail' %}?next={{ next_url }}"
+                                                   class="nav-link">
+                                                    E-mail
+                                                </a>
                                             </li>
                                         {% endif %}
                                         <li class="nav-item">
