@@ -66,7 +66,7 @@
                                         type="submit" name="button" value="remark">Remark</button>
                             </form>
                         {% else %}
-                            <form action="{% url 'gift:select' gift.gift_number" method="post">
+                            <form action="{% url 'gift:select' gift.gift_number %}" method="post">
                                 {% csrf_token %}
                                 {% if not user_has_gift %}
                                     <button class="btn btn-outline-success btn-block"

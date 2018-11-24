@@ -41,7 +41,7 @@ class GiftSelectView(View):
         except:
             return redirect('gift:home')
         if request.POST['button'] == 'remark':
-            return redirect('gift:add_comment')
+            return redirect('gift:add_comment', gift_number)
         current_gift.selected = True
         current_gift.receiver = request.user
         current_gift.save()
@@ -56,7 +56,7 @@ class GiftChangeMindView(View):
         except:
             return redirect('gift:home')
         if request.POST['button'] == 'remark':
-            return redirect('gift:add_comment')
+            return redirect('gift:add_comment', gift_number)
         current_gift = Gift.objects.get(gift_number=gift_number)
         current_gift.selected = False
         current_gift.receiver = None
