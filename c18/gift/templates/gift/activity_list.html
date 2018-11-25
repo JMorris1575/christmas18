@@ -1,0 +1,31 @@
+{% extends parent_template|default:"base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="card border-success col-md-10 mx-md-auto px-0">
+        <h2 class="card-header bg-success text-white">
+            Choose an Activity
+        </h2>
+        <h4 class="card-title text-success mt-3 mb-0 px-5">
+            This page launches Christmas games and activities for us to enjoy. Check back from time to time
+            to see if I've added anything new.
+        </h4>
+        <div class=" card-body text-success pt-0">
+            <hr>
+            <div class="row">
+                <div class="col-md-8 card-text">
+                    <h5>Trivia Game</h5>
+                    <p>
+                        Compete with other family members for the best score in a Christmas Trivial game. You're on
+                        the honor system here. No fair asking Alexa or Siri or whatever other cybernetic voices there
+                        may be, and no looking things up in books or on the internet. Just trust your own mind.
+                    </p>
+                </div>
+                <div class="col-md-4 mt-3 mt-md-0">
+                    <a class="btn btn-outline-info btn-block" href="#">Play Trivia Game</a>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </div>
+{% endblock %}

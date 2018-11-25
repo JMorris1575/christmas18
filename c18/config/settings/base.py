@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'memory.apps.MemoryConfig',
     'user.apps.UserConfig',
     'mail.apps.MailConfig',
+    'trivia.apps.TriviaConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

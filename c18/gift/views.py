@@ -18,6 +18,15 @@ class GiftListView(View):
         return render(request, self.template, context)
 
 
+class ActivityListView(View):
+    template = 'gift/activity_list.html'
+
+    def get(self, request):
+        context = {'memory': utilities.get_random_memory()}
+        return render(request, self.template, context)
+
+
+
 class GiftDetailView(View):
     template = 'gift/gift_detail.html'
 
