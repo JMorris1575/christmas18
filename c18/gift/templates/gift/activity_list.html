@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-    <div class="card border-success col-md-10 mx-md-auto px-0">
+    <div class="card border-success col-md-10 mx-md-auto mb-3 px-0">
         <h2 class="card-header bg-success text-white">
             Choose an Activity
         </h2>
@@ -22,7 +22,7 @@
                     </p>
                 </div>
                 <div class="col-md-4 mt-3 mt-md-0">
-                    <a class="btn btn-outline-info btn-block" href="#">Play Trivia Game</a>
+                    <a class="btn btn-outline-info btn-block" href="{% url 'trivia:scoreboard' %}">Play Trivia Game</a>
                 </div>
             </div>
             <hr>
