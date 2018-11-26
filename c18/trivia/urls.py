@@ -9,5 +9,5 @@ app_name = 'trivia'
 
 urlpatterns = [
     path('', RedirectView.as_view(url=reverse_lazy('trivia:scoreboard'))),
-    path('scoreboard', ScoreboardView.as_view(), name='scoreboard'),
+    path('scoreboard', login_required(ScoreboardView.as_view()), name='scoreboard'),
 ]
