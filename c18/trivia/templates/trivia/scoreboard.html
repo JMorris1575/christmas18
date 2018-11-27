@@ -2,5 +2,25 @@
 {% load static %}
 
 {% block content %}
-    Here are the stats: {{ stats }}
+    <div class="card col-md-10 mx-md-auto mb-3 px-0 border-success">
+        <h2 class="card-header bg-success text-white">Christmas Trivia Game</h2>
+        <div class="info-box m-3 h5">
+            <p class="card-title">Here are the rules:</p>
+            <ol>
+                <li>Questions must be answered in order.</li>
+                <li>Questions may only be answered once. You may see your previous answers, but you may not change
+                them.</li>
+                <li>Players must answer questions from their own knowledge without getting information from electronic
+                devices, books, or elsewhere.</li>
+                <li>The website will enforce rules 1 and 2. You are on the honor system for rule 3.</li>
+            </ol>
+        </div>
+        <div class="col-md-10 mx-md-auto">
+            {% if user_attempts == 0 %}
+                <a class="btn btn-outline-success mx-auto" href="{% url 'trivia:next_question' %}">First Question</a>
+            {% else %}
+                <a class="btn btn-outline-success mx-auto" href="{% url 'trivia:next_question' %}">Next Question</a>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}

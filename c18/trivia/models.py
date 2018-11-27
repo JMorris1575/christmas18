@@ -54,8 +54,8 @@ class TriviaConversation(models.Model):
         return get_adjusted_name(self.user) + ': ' + self.entry
 
 
-class TriviaPlayer(models.Model):
-    player = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+class TriviaStats(models.Model):
+    player = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True)
     questions_attempted = models.SmallIntegerField(default=0)
     answers_correct = models.SmallIntegerField(default=0)
 

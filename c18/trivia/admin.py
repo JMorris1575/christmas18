@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import TriviaQuestion, TriviaChoice, TriviaResponse, TriviaConversation, TriviaPlayer
+from .models import TriviaQuestion, TriviaChoice, TriviaResponse, TriviaConversation, TriviaStats
 
 
 class ChoiceInline(admin.StackedInline):
@@ -15,4 +15,4 @@ class TriviaQuestionAdmin(admin.ModelAdmin):
 admin.site.register(TriviaQuestion, TriviaQuestionAdmin)
 admin.site.register(TriviaResponse)                         # for use during development only
 admin.site.register(TriviaConversation)
-admin.site.register(TriviaPlayer)
+admin.site.register(TriviaStats)
