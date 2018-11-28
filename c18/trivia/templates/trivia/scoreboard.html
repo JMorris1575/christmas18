@@ -16,11 +16,35 @@
             </ol>
         </div>
         <div class="col-md-10 mx-md-auto">
-            {% if user_attempts == 0 %}
-                <a class="btn btn-outline-success mx-auto" href="{% url 'trivia:next_question' %}">First Question</a>
-            {% else %}
-                <a class="btn btn-outline-success mx-auto" href="{% url 'trivia:next_question' %}">Next Question</a>
-            {% endif %}
+            <div class="row justify-content-center">
+                {% if user_attempts == 0 %}
+                    <a class="btn btn-outline-success text-center" href="{% url 'trivia:next_question' %}">First Question</a>
+                {% else %}
+                    <a class="btn btn-outline-success mx-auto text-center" href="{% url 'trivia:next_question' %}">Next Question</a>
+                {% endif %}
+            </div>
+        </div>
+        <hr>
+        <div class="col-md-10 mx-md-auto">
+            <div class="row justify-content-center">
+                <h2 class="mx-auto text-success">Player Rankings</h2>
+            </div>
+            <hr>
+            <div class="row justify-content-center">
+                {% if stats %}
+                    {% for stat in stats %}
+                        {% if stat.type == "heading" %}
+                            <hr>
+                            <p class="text-success">{{ stat.value }}</p>
+                        {% else %}
+                            <p class="text-success">{{ stat.value.name }}:  {{ stat.value.percent }}</p>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <p class="text-success">No rankings yet available.</p>
+                {% endif %}
+            </div>
+            <hr>
         </div>
     </div>
 {% endblock %}
