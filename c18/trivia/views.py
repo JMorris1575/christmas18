@@ -67,9 +67,31 @@ class DisplayQuestionView(View):
         if int(question_number) > len(TriviaQuestion.objects.all()):
             return redirect(reverse('end_of_questions'))
         question = TriviaQuestion.objects.get(number=question_number)
-        choices = question.triviachoice_set.filter(question=question)
+        choices = question.triviachoice_set.all()
         context = {'memory':utilities.get_random_memory(), 'question':question, 'choices':choices}
         return render(request, self.template_name, context)
+
+    def post(self, request, question_number):
+        question = TriviaQuestion.objects.get(number=question_number)
+        choices = question.triviachoice_set.all()
+        if int(question_number) < get_next_question(request.user):
+            user_response = TriviaResponse.objects.get(user=request.user, question=question)
+            choice = user_response.choice
+            return redirect('trivia_result', question_number=question_number, choice_number=choice.number)
+        try:
+            choice_index = request.POST['choice']
+        except KeyError:
+            context = {'question': question, 'choices': choices, 'display_memory': utilities.get_random_memory(),
+                       'error_message': 'You must choose one of the responses below.'}
+            return redirect('trivia:display_question', question_number=question_number)
+        else:
+            choice = choices.get(number=choice_index)
+            user_response = TriviaResponse(user=request.user, question=question, response=choice)
+            user_response.correct = choice.correct
+            user_response.save()
+        return redirect('trivia:trivia_result', question_number=question_number, choice_number = choice.number)
+
+
 
 
 class EndOfQuestions(View):

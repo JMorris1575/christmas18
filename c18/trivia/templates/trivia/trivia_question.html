@@ -2,5 +2,27 @@
 {% load static %}
 
 {% block content %}
-    Got to trivia_question.html
+    <div class="card col-md-10 mx-md=auto px-0 border-success">
+        <h2 class="card-header bg-success text-white">Question: {{ question.number }}</h2>
+        <form action="{% url 'trivia:display_question' question.number %}" method="post">
+            {% csrf_token %}
+            <div class="card-title text-success">{{ question }}</div>
+            {% if error_message %}
+                <div class="text-danger">
+                    <p><strong>{{ error_message }}</strong></p>
+                </div>
+            {% else %}
+                <div class="card-body">
+                    {% for choice in choices %}
+                        <div class="form-group">
+                            <input type="radio" name="choice" value={{ choice.number }}>{{ choice.index }}  {{ choice }}</input>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <div class="row justify-content-center">
+                <input class="btn btn-outline-success" type="submit" value="Submit" name="trivia_submit"/>
+            </div>
+        </form>
+    </div>
 {% endblock %}
