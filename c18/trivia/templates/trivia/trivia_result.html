@@ -39,18 +39,12 @@
             <p class="card-text text-success mt-3 mx-md-5">{{ question.explanation }}</p>
             <hr>
             <div class="row justify-content-between">
-                <a class="btn btn-outline-dark col-md-3" href="{% url 'trivia:previous' question.number %}">
+                <a class="btn btn-outline-success col-md-3" href="{% url 'trivia:previous' question.number %}">
                     Previous
                 </a>
-                <a class="btn btn-outline-dark col-md-3" href="{% url 'trivia:next' question.number %}">
+                <a class="btn btn-outline-success col-md-3" href="{% url 'trivia:next' question.number %}">
                     Next
                 </a>
-            </div>
-
-            <hr>
-            <div class="row justify-content-around">
-                <a class="btn btn-outline-success col-md-3" href="{% url 'gift:activity_index' %}">Activity Page</a>
-                <a class="btn btn-outline-success col-md-3" href="{% url 'gift:home' %}">Gift Page</a>
             </div>
         </div>
     </div>

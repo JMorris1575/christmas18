@@ -33,29 +33,33 @@
                         <!-- Menu Links -->
                         <div class="col">
                             <nav class="navbar navbar-light navbar-expand-lg pt-0">
-                                <button class="navbar-toggler ml-auto p-0" type="button"
+                                <button class="navbar-toggler ml-auto p-0 pb-3" type="button"
                                         data-toggle="collapse" data-target="#navbarCollapse">
                                     <span class="navbar-toggler-icon pt-1" style="background:none">
                                         <i class="fas fa-bars"></i>
                                     </span>
                                 </button>
                                 <div class="collapse navbar-collapse" id="navbarCollapse">
-                                    <ul class="navbar-nav ml-auto text-right">
+                                    <div class="navbar-nav ml-auto nav-fill">
                                         {% if user.is_staff %}
-                                            <li class="nav-item">
-                                                <a href="{% url 'mail:send-mail' %}?next={{ next_url }}"
-                                                   class="nav-link">
-                                                    E-mail
-                                                </a>
-                                            </li>
+                                            <a href="{% url 'mail:send-mail' %}?next={{ next_url }}"
+                                               class="nav-item nav-link btn btn-outline-primary btn-lg text-right pb-3">
+                                                E-mail
+                                            </a>
                                         {% endif %}
-                                        <li class="nav-item">
-                                            <a href="{% url 'memory:memory_list' %}" class="nav-link">Memories</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{% url 'gift:activity_index' %}" class="nav-link">Activities</a>
-                                        </li>
-                                    </ul>
+                                        <a href="{% url 'gift:home' %}"
+                                           class="nav-item nav-link btn btn-outline-primary btn-lg text-right pb-3">
+                                            Gifts
+                                        </a>
+                                        <a href="{% url 'memory:memory_list' %}"
+                                           class="nav-item nav-link btn btn-ouline-primary btn-lg text-right pb-3">
+                                            Memories
+                                        </a>
+                                        <a href="{% url 'gift:activity_index' %}"
+                                           class="nav-item nav-link btn btn-outline-primary btn-lg text-right pb-3">
+                                            Activities
+                                        </a>
+                                    </div>
                                 </div>
                             </nav>
                         </div>
