@@ -27,6 +27,13 @@ class Gift(models.Model):
             status = 'unwrapped'
         return os.path.join('gift', 'images', status, str(self) + '.png')
 
+    def get_thumbnail_filename(self):
+        if self.wrapped:
+            status = 'wrapped'
+        else:
+            status = 'unwrapped'
+        return os.path.join('gift', 'images', status, 'thumbnails', str(self) + '.png')
+
     def get_comments(self):
         comments = Comment.objects.filter(gift=self)
         return comments
