@@ -1,0 +1,57 @@
+{% extends parent_template|default:"base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="card col-md-10 mx-md-auto px-0 border-success">
+        <h2 class="card-header bg-success text-white">Your Results on Trivia Question: {{ question.number }}</h2>
+        <div class="card-body">
+            <h4 class="card-title text-success">{{ question }}</h4>
+            <ul class="list-group card-text">
+                {% for choice in choices %}
+                    {% if choice == user_choice %}
+                        {% if choice == correct_choice %}
+                            <li class="list-group-item bg-success text-white">
+                                {{ choice }} <-- Your Response
+                            </li>
+                        {% else %}
+                            <li class="list-group-item text-danger">
+                                {{ choice }} <-- Your Response
+                            </li>
+                        {% endif %}
+                    {% else %}
+                        {% if choice == correct_choice %}
+                            <li class="list-group-item bg-success text-white">
+                                {{ choice }}
+                            </li>
+                        {% else %}
+                            <li class="list-group-item text-success">
+                                {{ choice }}
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            {% if user_choice == correct_choice %}
+                <h5 class="card-text text-success mt-3 mx-md-5">You got it right!</h5>
+            {% else %}
+                <h5 class="card-text text-success mt-3 mx-md-5">Sorry, that's not right. The correct response is: {{ correct_choice }}</h5>
+            {% endif %}
+            <p class="card-text text-success mt-3 mx-md-5">{{ question.explanation }}</p>
+            <hr>
+            <div class="row justify-content-between">
+                <a class="btn btn-outline-dark col-md-3" href="{% url 'trivia:previous' question.number %}">
+                    Previous
+                </a>
+                <a class="btn btn-outline-dark col-md-3" href="{% url 'trivia:next' question.number %}">
+                    Next
+                </a>
+            </div>
+
+            <hr>
+            <div class="row justify-content-around">
+                <a class="btn btn-outline-success col-md-3" href="{% url 'gift:activity_index' %}">Activity Page</a>
+                <a class="btn btn-outline-success col-md-3" href="{% url 'gift:home' %}">Gift Page</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -3,7 +3,7 @@ from django.views.generic import View
 from django.contrib.auth.models import User
 from django.urls import reverse
 
-from .models import TriviaQuestion, TriviaResponse
+from .models import TriviaQuestion, TriviaChoice, TriviaResponse
 from user.models import get_adjusted_name
 
 from operator import itemgetter
@@ -40,12 +40,13 @@ class ScoreboardView(View):
         temp_sorted = sorted(temp, key = itemgetter('attempts', 'correct'), reverse=True)
         stats = []
         attempt_group = -1
+        total = len(TriviaQuestion.objects.all())
         for stat in temp_sorted:
             if stat['attempts'] == attempt_group:
                 stats.append(dict(type='stat', value=stat))
             else:
                 attempt_group = stat['attempts']
-                stats.append(dict(type='heading', value='Players attempting ' + str(attempt_group) + ' questions:'))
+                stats.append(dict(type='heading', value='Completing ' + str(attempt_group) + '/' + str(total)))
                 stats.append(dict(type='stat', value=stat))
         return stats, current_user_attempts
 
@@ -54,45 +55,73 @@ class NextQuestionView(View):
 
     def get(self, request):
         print("got to NextQuestionView")
-        return redirect(reverse('trivia:display_question', args=[get_next_question(request.user)]))
+        return redirect('trivia:display_question', get_next_question(request.user))
 
 
 class DisplayQuestionView(View):
     template_name = 'trivia/trivia_question.html'
 
     def get(self, request, question_number):
-        if int(question_number) > get_next_question(request.user):
-            question_number = get_next_question(request.user)
-            return redirect(reverse('trivia:display_question', kwargs={'question_number':question_number}))
-        if int(question_number) > len(TriviaQuestion.objects.all()):
-            return redirect(reverse('end_of_questions'))
-        question = TriviaQuestion.objects.get(number=question_number)
-        choices = question.triviachoice_set.all()
-        context = {'memory':utilities.get_random_memory(), 'question':question, 'choices':choices}
-        return render(request, self.template_name, context)
+        try:
+            question = TriviaQuestion.objects.get(number=question_number)
+        except:
+            question_number = 1
+            return redirect('trivia:display_question', question_number=question_number)
+        else:
+            response = TriviaResponse.objects.get(question=question).response
+            if int(question_number) > get_next_question(request.user):      # prevents going beyond user's next question
+                question_number = get_next_question(request.user)
+                return redirect('trivia:display_question', question_number=question_number)
+            if int(question_number) < get_next_question(request.user):      # prevents answering a quesstion twice
+                return redirect('trivia:result', question_number=question.number, choice_id=response.id)
+            choices = question.triviachoice_set.all()
+            context = {'memory':utilities.get_random_memory(), 'question':question, 'choices':choices}
+            return render(request, self.template_name, context)
 
     def post(self, request, question_number):
         question = TriviaQuestion.objects.get(number=question_number)
         choices = question.triviachoice_set.all()
         if int(question_number) < get_next_question(request.user):
             user_response = TriviaResponse.objects.get(user=request.user, question=question)
-            choice = user_response.choice
-            return redirect('trivia_result', question_number=question_number, choice_number=choice.number)
+            choice = user_response.response
+            return redirect('trivia:result', question_number=question_number, choice_id=choice.id)
         try:
-            choice_index = request.POST['choice']
+            choice_id = request.POST['choice']
         except KeyError:
             context = {'question': question, 'choices': choices, 'display_memory': utilities.get_random_memory(),
                        'error_message': 'You must choose one of the responses below.'}
-            return redirect('trivia:display_question', question_number=question_number)
+            return render(request, self.template_name, context)
         else:
-            choice = choices.get(number=choice_index)
+            choice = choices.get(id=choice_id)
             user_response = TriviaResponse(user=request.user, question=question, response=choice)
             user_response.correct = choice.correct
             user_response.save()
-        return redirect('trivia:trivia_result', question_number=question_number, choice_number = choice.number)
+        return redirect('trivia:result', question_number=question_number, choice_id = choice.id)
 
 
+class DisplayResultView(View):
+    template_name = 'trivia/trivia_result.html'
 
+    def get(self, request, question_number, choice_id):
+        question = TriviaQuestion.objects.get(number=question_number)
+        user_choice = TriviaChoice.objects.get(id=choice_id)
+        choices = question.triviachoice_set.all()
+        correct_choice = question.triviachoice_set.get(correct=True)
+        context = {'memory': utilities.get_random_memory(), 'question': question, 'choices': choices,
+                   'user_choice': user_choice, 'correct_choice': correct_choice}
+        return render(request, self.template_name, context)
+
+def previous_question_view(request, question_number):
+    previous = question_number - 1
+    if previous < 1:
+        previous = 1
+    return redirect('trivia:display_question', previous)
+
+def next_question_view(request, question_number):
+    next = question_number + 1
+    if next > len(TriviaQuestion.objects.all()):
+        next = len(TriviaQuestion.objects.all())
+    return redirect('trivia:display_question', next)
 
 class EndOfQuestions(View):
     pass

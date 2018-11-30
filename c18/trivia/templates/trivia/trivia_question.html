@@ -2,27 +2,36 @@
 {% load static %}
 
 {% block content %}
-    <div class="card col-md-10 mx-md=auto px-0 border-success">
-        <h2 class="card-header bg-success text-white">Question: {{ question.number }}</h2>
-        <form action="{% url 'trivia:display_question' question.number %}" method="post">
-            {% csrf_token %}
-            <div class="card-title text-success">{{ question }}</div>
-            {% if error_message %}
-                <div class="text-danger">
-                    <p><strong>{{ error_message }}</strong></p>
-                </div>
-            {% else %}
-                <div class="card-body">
+    <div class="row">
+        <div class="card col-md-10 mx-md-auto px-0 border-success">
+            <h2 class="card-header bg-success text-white">Trivia Question: {{ question.number }}</h2>
+            <div class="card-body">
+                <form action="{% url 'trivia:display_question' question.number %}" method="post">
+                    {% csrf_token %}
+                    <div class="card-title text-success">{{ question }}</div>
+                    {% if error_message %}
+                        <div class="text-danger">
+                            <p><strong>{{ error_message }}</strong></p>
+                        </div>
+                    {% endif %}
                     {% for choice in choices %}
-                        <div class="form-group">
-                            <input type="radio" name="choice" value={{ choice.number }}>{{ choice.index }}  {{ choice }}</input>
+                        <div class="form-check">
+                            <label class="form-check-label form-control-lg text-success ml-sm-3 ml-md-5">
+                                <input class="form-check-input" type="radio" name="choice" value={{ choice.id }} id="choice"></input>
+                                  {{ choice }}
+                            </label>
                         </div>
                     {% endfor %}
+                    <div class="row justify-content-center">
+                        <input class="btn btn-outline-success btn-lg mt-3" type="submit" value="Submit" name="trivia_submit"/>
+                    </div>
+                </form>
+                <hr>
+                <div class="row justify-content-around">
+                    <a class="btn btn-outline-success col-md-3" href="{% url 'gift:activity_index' %}">Activity Page</a>
+                    <a class="btn btn-outline-success col-md-3" href="{% url 'gift:home' %}">Gift Page</a>
                 </div>
-            {% endif %}
-            <div class="row justify-content-center">
-                <input class="btn btn-outline-success" type="submit" value="Submit" name="trivia_submit"/>
             </div>
-        </form>
+        </div>
     </div>
 {% endblock %}

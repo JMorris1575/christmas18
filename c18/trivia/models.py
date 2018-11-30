@@ -6,9 +6,10 @@ from user.models import get_adjusted_name
 
 class TriviaQuestion(models.Model):
     number = models.IntegerField(unique=True)
-    text = models.TextField()
+    text = models.CharField(max_length=255)
     attempted_count = models.IntegerField(default=0)
     correct_count = models.IntegerField(default=0)
+    explanation = models.CharField(max_length=255, default="")
 
     def __str__(self):
         return self.text

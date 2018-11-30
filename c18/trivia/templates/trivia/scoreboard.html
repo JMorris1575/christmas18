@@ -15,6 +15,30 @@
                 <li>The website will enforce rules 1 and 2. You are on the honor system for rule 3.</li>
             </ol>
         </div>
+        <hr>
+        <div class="col-md-10 mx-md-auto">
+            <div class="row justify-content-center">
+                <h2 class="mx-auto text-success">Player Rankings</h2>
+            </div>
+            {% if stats %}
+                {% for stat in stats %}
+                    {% if stat.type == "heading" %}
+                        <hr>
+                        <div class="row justify-content-center">
+                            <h3 class="text-success">{{ stat.value }}</h3>
+                        </div>
+                    {% else %}
+                        <div class="row justify-content-center">
+                            <h4 class="text-success">{{ stat.value.name }}:  {{ stat.value.percent }}</h4>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <p class="text-success">No rankings yet available.</p>
+            {% endif %}
+            </div>
+            <hr>
+        </div>
         <div class="col-md-10 mx-md-auto">
             <div class="row justify-content-center">
                 {% if user_attempts == 0 %}
@@ -25,26 +49,5 @@
             </div>
         </div>
         <hr>
-        <div class="col-md-10 mx-md-auto">
-            <div class="row justify-content-center">
-                <h2 class="mx-auto text-success">Player Rankings</h2>
-            </div>
-            <hr>
-            <div class="row justify-content-center">
-                {% if stats %}
-                    {% for stat in stats %}
-                        {% if stat.type == "heading" %}
-                            <hr>
-                            <p class="text-success">{{ stat.value }}</p>
-                        {% else %}
-                            <p class="text-success">{{ stat.value.name }}:  {{ stat.value.percent }}</p>
-                        {% endif %}
-                    {% endfor %}
-                {% else %}
-                    <p class="text-success">No rankings yet available.</p>
-                {% endif %}
-            </div>
-            <hr>
-        </div>
     </div>
 {% endblock %}
