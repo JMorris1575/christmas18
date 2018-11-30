@@ -3,7 +3,7 @@
 
 {% block content %}
     <div class="row mx-1 mx-md-5 mb-3 info-box text-blue">
-        <a class="d-md-none" data-toggle="collapse" href="#welcome"><span>Welcome </span></a>
+        <a class="d-md-none" data-toggle="collapse" href="#welcome"><span>Welcome... </span></a>
         <div class="d-md-none collapse" id="welcome">
             <p><i>Welcome to the 2018 version of the family Christmas website. I've tried to make it more friendly to those
                 who access the internet on those tiny little cell-phone screens but I'm still just learning. Who knows what
@@ -37,22 +37,22 @@
                     <div class="col-sm-4 col-md-3 pl-0">
                         {% if gift.selected %}
                             <a href="{% url 'gift:gift_detail' gift.gift_number %}" title="Click for larger image.">
-                                <img class="w-100 border border-primary gift-img d-none d-sm-block"
+                                <img class="w-100 border border-primary gift-img d-none d-md-block"
                                      src="{% static gift.get_image_filename %}" alt="Image of {{ gift }}">
                             </a>
                             <h4 class="text-primary">{{ gift }}
-                                <a class="d-inline d-sm-none" href="{% url 'gift:gift_detail' gift.gift_number %}">
+                                <a class="d-inline d-md-none" href="{% url 'gift:gift_detail' gift.gift_number %}">
                                     See it...
                                 </a>
                             </h4>
                             <p class="text-primary mx-auto">Selected by {{ gift.receiver_name }}</p>
                         {% else %}
                             <a href="{% url 'gift:gift_detail' gift.gift_number %}" title="Click for larger image.">
-                                <img class="w-100 border border-success gift-img d-none d-sm-block"
+                                <img class="w-100 border border-success gift-img d-none d-md-block"
                                      src="{% static gift.get_image_filename %}" alt="Image of {{ gift }}">
                             </a>
                             <h4 class="text-success">{{ gift }}
-                                <a class="d-inline d-sm-none" href="{% url 'gift:gift_detail' gift.gift_number %}">
+                                <a class="d-inline d-md-none" href="{% url 'gift:gift_detail' gift.gift_number %}">
                                     See it...
                                 </a>
                             </h4>
