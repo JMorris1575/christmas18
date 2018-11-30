@@ -26,7 +26,12 @@
                     <div id="{{ item.user }}_memories" class="collapse" data-parent="#family_accordian">
                         <div class="card-body">
                             {% for memory in item.memories %}
-                                <p class="pl-1 pl-md-5">{{ memory }}</p>
+                                <p class="pl-1 pl-md-5">
+                                    {{ memory }}
+                                    {% if memory.user == user %}
+                                        <a href="{% url 'memory:edit' memory.id %}"> (Edit...)</a>
+                                    {% endif %}
+                                </p>
                             {% endfor %}
                         </div>
                     </div>
@@ -36,7 +41,7 @@
 
         <!-- Add Memory Button -->
         <div class="row justify-content-center my-3">
-            <a class="btn btn-outline-success" href="#">
+            <a class="btn btn-outline-success" href="{% url 'memory:create' %}">
                 Add Memory
             </a>
         </div>

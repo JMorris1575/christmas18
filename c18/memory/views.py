@@ -27,3 +27,14 @@ class MemoryListView(View):
         context = {'memory':utilities.get_random_memory(), 'collection':collection}
         return render(request, self.template_name, context)
 
+
+class MemoryEditView(View):
+    template_name = 'memory/memory_edit.html'
+
+    def get(self, request, memory_id=None):
+        if memory_id:
+            current_memory = Memory.objects.get(pk=memory_id)
+        else:
+            current_memory = None
+        context = {'memory':utilities.get_random_memory(), 'current_memory':current_memory}
+        return render(request, self.template_name, context)
