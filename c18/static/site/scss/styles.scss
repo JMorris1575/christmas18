@@ -74,6 +74,10 @@ header .nav-link {
     border: 3px solid $success;
 }
 
+.info-box p:last-child {
+    margin-bottom: 0;
+}
+
 .memory {
     font-family: serif;
     font-size: 1.2rem;

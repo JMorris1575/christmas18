@@ -6833,6 +6833,9 @@ header .nav-link {
   padding: 1rem;
   border: 3px solid #28a745; }
 
+.info-box p:last-child {
+  margin-bottom: 0; }
+
 .memory {
   font-family: serif;
   font-size: 1.2rem;
