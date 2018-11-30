@@ -1,0 +1,15 @@
+{% extends parent_template|default:"base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="card col-md-10 mx-md-auto mb-3 px-0 border-success">
+        <h2 class="card-header bg-success text-white">Christmas Memories</h2>
+        <div class="info-box m-3 h5">
+            <p>Click on the names below to see the memories they've added, or click the "Add Memory" button
+            to add your own Christmas memories.</p>
+        </div>
+        {% for item in collection %}
+            <p>{{ item.user }}</p>
+        {% endfor %}
+    </div>
+{% endblock %}

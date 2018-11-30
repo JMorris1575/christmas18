@@ -38,16 +38,15 @@
             {% endif %}
             </div>
             <hr>
-        </div>
-        <div class="col-md-10 mx-md-auto">
-            <div class="row justify-content-center">
-                {% if user_attempts == 0 %}
-                    <a class="btn btn-outline-success text-center" href="{% url 'trivia:next_question' %}">First Question</a>
-                {% else %}
-                    <a class="btn btn-outline-success mx-auto text-center" href="{% url 'trivia:next_question' %}">Next Question</a>
-                {% endif %}
+            <div class="col-md-10 mx-md-auto">
+                <div class="row justify-content-center mb-3">
+                    {% if user_attempts == 0 %}
+                        <a class="btn btn-outline-success text-center" href="{% url 'trivia:next_question' %}">First Question</a>
+                    {% else %}
+                        <a class="btn btn-outline-success mx-auto text-center" href="{% url 'trivia:next_question' %}">Next Question</a>
+                    {% endif %}
+                </div>
             </div>
         </div>
-        <hr>
     </div>
 {% endblock %}

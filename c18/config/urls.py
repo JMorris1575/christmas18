@@ -22,6 +22,7 @@ urlpatterns = [
     path('user/', include('user.urls')),
     path('gift/', include('gift.urls')),
     path('trivia/', include('trivia.urls')),
+    path('memories/', include('memory.urls')),
     path('mail/', include('mail.urls')),
     path('admin/', admin.site.urls),
 ]
