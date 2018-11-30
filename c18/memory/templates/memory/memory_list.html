@@ -8,8 +8,27 @@
             <p>Click on the names below to see the memories they've added, or click the "Add Memory" button
             to add your own Christmas memories.</p>
         </div>
-        {% for item in collection %}
-            <p>{{ item.user }}</p>
-        {% endfor %}
+        <div></div>
+        <div class="accordian" id="family_accordian">
+            {% for item in collection %}
+                <div class="card">
+                    <div class="card-header" id="{{ item.user }}_heading">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#{{ item.user }}_memories">
+                                {{ item.user }}'s Memories...
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="{{ item.user }}_memories" class="collapse" data-parent="#family_accordian">
+                        <div class="card-body">
+                            {% for memory in item.memories %}
+                                <p class="pl-1 pl-md-5">{{ memory }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}

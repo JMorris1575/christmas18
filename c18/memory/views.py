@@ -3,6 +3,7 @@ from django.views.generic import View
 from django.contrib.auth.models import User
 
 from .models import Memory
+from user.models import get_adjusted_name
 
 from operator import itemgetter
 
@@ -12,6 +13,9 @@ import utilities
 class MemoryListView(View):
     template_name = 'memory/memory_list.html'
 
+    def sorter(self, e):
+        return get_adjusted_name(e['user'])
+
     def get(self, request):
         memories = Memory.objects.all()
         collection = []
@@ -19,7 +23,7 @@ class MemoryListView(View):
             user_memories = memories.filter(user=user)
             if user_memories:
                 collection.append({'user':user, 'memories':user_memories})
-            collection_sorted = sorted(collection, key=itemgetter('user'))
+            collection.sort(key=self.sorter)
         context = {'memory':utilities.get_random_memory(), 'collection':collection}
         return render(request, self.template_name, context)
 
