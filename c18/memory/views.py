@@ -23,7 +23,8 @@ class MemoryListView(View):
         for user in User.objects.all():
             user_memories = memories.filter(user=user)
             if user_memories:
-                collection.append({'user':user, 'memories':user_memories})
+                name = get_adjusted_name(user)
+                collection.append({'user': user, 'name':name, 'memories':user_memories})
             collection.sort(key=self.sorter)
         context = {'memory':utilities.get_random_memory(), 'collection':collection}
         return render(request, self.template_name, context)
