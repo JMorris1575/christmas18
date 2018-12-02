@@ -68,11 +68,11 @@ class DisplayQuestionView(View):
             question_number = 1
             return redirect('trivia:display_question', question_number=question_number)
         else:
-            response = TriviaResponse.objects.get(question=question).response
             if int(question_number) > get_next_question(request.user):      # prevents going beyond user's next question
                 question_number = get_next_question(request.user)
                 return redirect('trivia:display_question', question_number=question_number)
-            if int(question_number) < get_next_question(request.user):      # prevents answering a quesstion twice
+            if int(question_number) < get_next_question(request.user):      # prevents answering a question twice
+                response = TriviaResponse.objects.get(question=question).response
                 return redirect('trivia:result', question_number=question.number, choice_id=response.id)
             choices = question.triviachoice_set.all()
             context = {'memory':utilities.get_random_memory(), 'question':question, 'choices':choices}
@@ -103,6 +103,9 @@ class DisplayResultView(View):
     template_name = 'trivia/trivia_result.html'
 
     def get(self, request, question_number, choice_id):
+        if int(question_number) >= get_next_question(request.user):  # prevents going beyond user's next question
+            question_number = get_next_question(request.user)
+            return redirect('trivia:display_question', question_number=question_number)
         question = TriviaQuestion.objects.get(number=question_number)
         user_choice = TriviaChoice.objects.get(id=choice_id)
         choices = question.triviachoice_set.all()
@@ -114,13 +117,13 @@ class DisplayResultView(View):
 def previous_question_view(request, question_number):
     previous = question_number - 1
     if previous < 1:
-        previous = 1
+        previous = len(TriviaQuestion.objects.all())
     return redirect('trivia:display_question', previous)
 
 def next_question_view(request, question_number):
     next = question_number + 1
     if next > len(TriviaQuestion.objects.all()):
-        next = len(TriviaQuestion.objects.all())
+        next = 1
     return redirect('trivia:display_question', next)
 
 class EndOfQuestions(View):

@@ -36,7 +36,15 @@
             {% else %}
                 <h5 class="card-text text-success mt-3 mx-md-5">Sorry, that's not right. The correct response is: {{ correct_choice }}</h5>
             {% endif %}
-            <p class="card-text text-success mt-3 mx-md-5">{{ question.explanation }}</p>
+            {% if question.explanation %}
+                <div class="card-text text-blue mt-3 mx-md-5">
+                    <h5>Explanation: </h5>
+                    {{ question.explanation }}
+                    {% if question.link %}
+                        <a href="{{ question.link }}">Click or tap here for more information.</a>
+                    {% endif %}
+                </div>
+            {% endif %}
             <hr>
             <div class="row justify-content-between">
                 <a class="btn btn-outline-success col-md-3" href="{% url 'trivia:previous' question.number %}">
