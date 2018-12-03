@@ -11,7 +11,8 @@ from operator import itemgetter
 import utilities
 
 def get_next_question(user):
-    return len(TriviaResponse.objects.filter(user=user)) + 1
+    next_question = len(TriviaResponse.objects.filter(user=user)) + 1
+    return next_question
 
 class ScoreboardView(View):
     template_name = 'trivia/scoreboard.html'
@@ -26,26 +27,26 @@ class ScoreboardView(View):
         temp = []
         for user in users:
             user_responses = TriviaResponse.objects.filter(user=user)
-            attempts = len(user_responses)
+            attempted_questions = len(user_responses)
             if user == current_user:
-                current_user_attempts = attempts
+                current_user_attempts = attempted_questions
             correct = len(user_responses.filter(correct=True))
-            if attempts != 0:
-                percent = '{:.1%}'.format(correct/attempts)
+            if attempted_questions != 0:
+                percent = '{:.1%}'.format(correct/attempted_questions)
             else:
                 percent = '0.0%'
             name = get_adjusted_name(user)
-            if attempts > 0:
-                temp.append( {'attempts':attempts, 'correct':correct, 'percent':percent, 'name':name} )
-        temp_sorted = sorted(temp, key = itemgetter('attempts', 'correct'), reverse=True)
+            if attempted_questions > 0:
+                temp.append( {'attempted_questions':attempted_questions, 'correct':correct, 'percent':percent, 'name':name} )
+        temp_sorted = sorted(temp, key = itemgetter('attempted_questions', 'correct'), reverse=True)
         stats = []
         attempt_group = -1
         total = len(TriviaQuestion.objects.all())
         for stat in temp_sorted:
-            if stat['attempts'] == attempt_group:
+            if stat['attempted_questions'] == attempt_group:
                 stats.append(dict(type='stat', value=stat))
             else:
-                attempt_group = stat['attempts']
+                attempt_group = stat['attempted_questions']
                 stats.append(dict(type='heading', value='Completing ' + str(attempt_group) + '/' + str(total)))
                 stats.append(dict(type='stat', value=stat))
         return stats, current_user_attempts
@@ -54,7 +55,6 @@ class ScoreboardView(View):
 class NextQuestionView(View):
 
     def get(self, request):
-        print("got to NextQuestionView")
         return redirect('trivia:display_question', get_next_question(request.user))
 
 
@@ -62,11 +62,11 @@ class DisplayQuestionView(View):
     template_name = 'trivia/trivia_question.html'
 
     def get(self, request, question_number):
-        try:
+        try:                                                                # prevents going beyond end of questions
             question = TriviaQuestion.objects.get(number=question_number)
         except:
-            question_number = 1
-            return redirect('trivia:display_question', question_number=question_number)
+            question_number = get_next_question(request.user)
+            return redirect('trivia:display_question', question_number=question_number) # goes to user's next question
         else:
             if int(question_number) > get_next_question(request.user):      # prevents going beyond user's next question
                 question_number = get_next_question(request.user)
@@ -121,12 +121,12 @@ class DisplayResultView(View):
 def previous_question_view(request, question_number):
     previous = question_number - 1
     if previous < 1:
-        previous = len(TriviaQuestion.objects.all())
+        previous = len(TriviaQuestion.objects.filter(publish=True))
     return redirect('trivia:display_question', previous)
 
 def next_question_view(request, question_number):
     next = question_number + 1
-    if next > len(TriviaQuestion.objects.all()):
+    if next > len(TriviaQuestion.objects.filter(publish=True)):
         next = 1
     return redirect('trivia:display_question', next)
 
