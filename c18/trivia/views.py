@@ -96,6 +96,10 @@ class DisplayQuestionView(View):
             user_response = TriviaResponse(user=request.user, question=question, response=choice)
             user_response.correct = choice.correct
             user_response.save()
+            question.attempted_count += 1
+            if choice.correct:
+                question.correct_count += 1
+            question.save()
         return redirect('trivia:result', question_number=question_number, choice_id = choice.id)
 
 
