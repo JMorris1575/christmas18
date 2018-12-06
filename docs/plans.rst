@@ -156,10 +156,9 @@ Models
 From the above it seems there should be an Object model with the following fields:
 
 #. name or number: to identify the object on each page where it is pictured
-#. image: the url to the image of the object
 #. publish: a boolean to indicate if this object should be open for play
-#. stage: the current stage, 1, 2 or 3, that this object's game is in.
-#. correct_description: the correct description for this object
+#. stage: the current stage, one, two or three, that this object's game is in.
+#. correct_description: a correct description for this object
 
 There will also need to be a Description model with the following fields:
 
@@ -215,8 +214,9 @@ This seems like the order I should follow in the implementation of the What Is I
 
 #. Create the app and add it to InstalledApps
 #. Create the models.
-#. Register the models with that admin.
+#. Register the models with the admin.
 #. Make migrations and migrate the changes to the database.
+#. Add the migrations to git.
 #. Create a static folder for the images.
 #. Add an object or some objects to the database.
 #. Create the URL patterns to arrive at the object list page.

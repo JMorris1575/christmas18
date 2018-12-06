@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',
     'mail.apps.MailConfig',
     'trivia.apps.TriviaConfig',
+    'whatsit.apps.WhatsitConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
