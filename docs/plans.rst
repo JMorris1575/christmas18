@@ -213,9 +213,12 @@ Implementation
 
 This seems like the order I should follow in the implementation of the What Is It? activity:
 
+#. Create the app and add it to InstalledApps
 #. Create the models.
+#. Register the models with that admin.
 #. Make migrations and migrate the changes to the database.
-#. Add an object of objects to the database.
+#. Create a static folder for the images.
+#. Add an object or some objects to the database.
 #. Create the URL patterns to arrive at the object list page.
 #. Link to the object list page from the activity list page.
 #. Stub in the template whatsit_object_list.html.
