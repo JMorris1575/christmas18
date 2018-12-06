@@ -3,6 +3,8 @@ from django.conf import settings
 
 from user.models import get_adjusted_name
 
+import os
+
 
 class Object(models.Model):
     ONE = '1'
@@ -18,8 +20,17 @@ class Object(models.Model):
     stage = models.CharField(max_length=1, choices=STAGE_CHOICES, default=ONE)
     correct_description = models.CharField(max_length=500)
 
+    class Meta:
+        ordering = ['number']
+
     def __str__(self):
-        return 'Object ' + str(self.number) + ' Stage: ' + self.get_stage_display()
+        return 'Object ' + str(self.number)
+
+    def description_count(self):
+        return len(Description.objects.filter(object=self))
+
+    def image_filename(self):
+        return os.path.join('whatsit', 'images', str(self) + '.png')
 
 
 class Description(models.Model):

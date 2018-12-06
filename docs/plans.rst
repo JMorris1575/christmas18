@@ -221,9 +221,9 @@ This seems like the order I should follow in the implementation of the What Is I
 #. Add an object or some objects to the database.
 #. Create the URL patterns to arrive at the object list page.
 #. Link to the object list page from the activity list page.
-#. Stub in the template whatsit_object_list.html.
+#. Stub in the template object_list.html.
 #. Create ObjectListView.
-#. Fill out the template whatsit_object_list.html.
+#. Fill out the template object_list.html.
 #. Stub in a stage one object page: whatsit_one.html.
 #. Create ObjectView.
 #. Fill out the whatsit_one.html page.

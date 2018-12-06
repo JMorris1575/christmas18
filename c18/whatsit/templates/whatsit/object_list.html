@@ -1,0 +1,34 @@
+{% extends parent_template|default:"base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="card border-success col-md-10 mx-md-auto mb-3 px-0">
+        <h2 class="card-header bg-success text-white text-center">
+            Pick an Object to Play the Game
+        </h2>
+        <h4 class="card-title text-success mt-3 mb-0 px-5">
+            {% if objects|length == 0 %}
+                Sorry. No objects are ready yet.
+            {% elif objects|length == 1 %}
+                Click the object preview below:
+            {% else %}
+                Click one of the object previews below:
+            {% endif %}
+        </h4>
+        {% for object in objects %}
+            <div class="row p-3">
+                <a class="col-md-3" href="#">
+                    <img class="col" src="{% static object.image_filename %}">
+                </a>
+                <div class="col-md-9">
+                    {% if object.stage == object.ONE %}
+                        <h5 class="text-success">Descriptions are being collected for this object.</h5>
+                        <p class="text-success">This object has
+                            {{ object.description_count }} description{{ object.description_count|pluralize }}
+                            so far.</p>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
