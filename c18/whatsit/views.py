@@ -15,4 +15,8 @@ class ObjectListView(View):
         return render(request, self.template_name, context)
 
 
+class SingleObjectView(View):
+    pass
+
+
 
