@@ -32,6 +32,8 @@ class SingleObjectView(View):
                     context['description'] = description[0]
             elif object.stage == object.TWO:
                 self.template_name = 'whatsit/stage_two.html'
+                descriptions = Description.objects.filter(object=object)
+                context['descriptions'] = descriptions
 
         return render(request, self.template_name, context)
 

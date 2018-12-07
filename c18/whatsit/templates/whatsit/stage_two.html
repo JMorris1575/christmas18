@@ -2,5 +2,32 @@
 {% load static %}
 
 {% block content %}
-    You have arrived at stage_two.html
+    <div class="card border-success col-md-10 mx-md-auto mb-3 px-0">
+        <h2 class="card-header bg-success text-white text-center">
+            Vote on the Best Description for {{ object }}.
+        </h2>
+        <div class="card-body text-success">
+
+            <!-- Image -->
+            <div class="row justify-content-center">
+                <img class="col-md-4" src="{% static object.image_filename %}">
+            </div>
+
+            <!-- Instructions -->
+            <h4 class="card-title">Select the description you think is most correct, or at least most convincing:</h4>
+            <hr>
+
+            <!-- Voting form -->
+            <form action="{% url 'whatsit:object_view' object.number %}" method="post">
+                {% csrf_token %}
+                {% for description in descriptions %}
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="chosen" value="{{ description.id }}">
+                        <label class="form-check-label">{{ description.description }}</label>
+                    </div>
+                    <hr>
+                {% endfor %}
+            </form>
+        </div>
+    </div>
 {% endblock %}
