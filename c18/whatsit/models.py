@@ -58,5 +58,5 @@ class Contribution(models.Model):
     type = models.CharField(max_length=2, choices=TYPE_CHOICES)
 
     def __str__(self):
-        return self.user.username + "'s " + self.get_type_display() + " for " + self.object
+        return self.user.username + "'s " + self.get_type_display() + " for " + str(self.object)
 

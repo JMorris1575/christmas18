@@ -45,7 +45,8 @@
                     {% csrf_token %}
                     <div class="form-group col-md-10 mx-md-auto mt-3 text-success">
                         <label for="new_description_text">Enter your description below:</label>
-                        <textarea class="form-control" id="new_description_text" name="description_text" rows="3">
+                        <textarea class="form-control" id="new_description_text"
+                                  name="description_text" rows="3" autofocus>
                         </textarea>
                     </div>
                     <div class="row justify-content-around">
@@ -63,7 +64,7 @@
                             You may edit or delete your description, or Cancel to return to the selection page:
                         </label>
                         <textarea class="form-control" id="description_text"
-                                  name="description_text" rows="3">{{ description.description }}</textarea>
+                                  name="description_text" rows="3" autofocus>{{ description.description }}</textarea>
                     </div>
                     <div class="row justify-content-around">
                         <button class="btn btn-outline-success btn-lg"

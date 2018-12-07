@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import View
+from django.contrib.auth import PermissionDenied
 
 from .models import Object, Description, Contribution
 
@@ -42,7 +43,8 @@ class SingleObjectView(View):
                 self.template_name = 'whatsit/stage_one.html'
                 if request.POST['button'] == 'cancel':
                     return redirect('whatsit:object_list')
-                # an elif will go here checking for deletions
+                elif request.POST['button'] == 'delete':
+                    return redirect('whatsit:description_delete', object_number=object_number)
                 else:
                     try:
                         old_description = Description.objects.get(object=object, author=request.user)
@@ -58,18 +60,54 @@ class SingleObjectView(View):
                                                           description=description_text)
                             new_description.save()
                             contribution = Contribution(object=object, user=request.user, type=Contribution.DESCRIPTION)
+                            contribution.save()
                     else:
                         context = {'memory': utilities.get_random_memory(), 'object': object, 'description': None,
                                    'error_message': 'Some text must appear in the box below or Save will not work.'}
                         if old_description:
                             context['description'] = old_description.description
                         return render(request, self.template_name, context)
-                    return redirect('whatsit:object_view', object_number)
+                    return redirect('whatsit:object_list')
 
 
+class DescriptionDeleteView(View):
+    template_name = 'whatsit/description_delete.html'
 
-class DescriptionEditView(View):
-    template_name = 'whatsit/stage_one.html'
+    def get(self, request, object_number):
+        try:
+            object = Object.objects.get(number=object_number)
+        except:
+            return redirect('whatsit:object_list')
+        try:
+            description_to_delete = Description.objects.get(object=object, author=request.user)
+        except:
+            return redirect('whatsit:object_list')
+        if description_to_delete.author == request.user:
+            context = {'memory':utilities.get_random_memory(), 'object_number': object_number,
+                       'description_to_delete': description_to_delete}
+            return render(request, self.template_name, context)
+        else:
+            raise PermissionDenied
+
+    def post(self, request, object_number):
+        try:
+            object = Object.objects.get(number=object_number)
+        except:
+            return redirect('whatsit:object_list')
+        try:
+            description_to_delete = Description.objects.get(object=object, author=request.user)
+        except:
+            return redirect('whatsit:object_list')
+        if request.user == description_to_delete.author:
+            if request.POST['button'] == 'yes':
+                description_to_delete.delete()
+                contribution = Contribution.objects.get(object=object, user=request.user, type=Contribution.DESCRIPTION)
+                contribution.delete()
+                return redirect('whatsit:object_list')
+            else:
+                return redirect('whatsit:object_view', object.number)
+        else:
+            raise PermissionDenied
 
 
 

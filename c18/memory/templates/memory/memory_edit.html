@@ -27,7 +27,8 @@
                     {% csrf_token %}
                     <div class="form-group col-md-10 mx-md-auto mt-3">
                         <label for="new_memory_text">Enter your memory below:</label>
-                        <textarea class="form-control" id="new_memory_text" name="memory_text" rows="3"></textarea>
+                        <textarea class="form-control" id="new_memory_text"
+                                  name="memory_text" rows="3" autofocus></textarea>
                     </div>
                     <div class="row justify-content-around">
                         <button class="btn btn-outline-success btn-lg"
@@ -42,7 +43,7 @@
                     <div class="form-group col-md-10 mx-md-auto mt-3">
                         <label for="memory_text">Enter your memory below:</label>
                         <textarea class="form-control" id="memory_text"
-                                  name="memory_text" rows="3">{{ current_memory.memory }}</textarea>
+                                  name="memory_text" rows="3" autofocus>{{ current_memory.memory }}</textarea>
                     </div>
                     <div class="row justify-content-around">
                         <button class="btn btn-outline-success btn-lg"
