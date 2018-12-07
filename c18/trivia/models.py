@@ -11,7 +11,7 @@ class TriviaQuestion(models.Model):
     attempted_count = models.IntegerField(default=0)
     correct_count = models.IntegerField(default=0)
     explanation = models.CharField(max_length=255, default="")
-    link = models.URLField(default="")
+    link = models.URLField(default="", blank=True)
 
     def __str__(self):
         return self.text

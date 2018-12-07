@@ -20,13 +20,11 @@ DATABASES = {
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_ROOT = os.path.join(os.path.dirname(os.path.dirname(BASE_DIR)), 'c17_static/')
-STATIC_URL = 'http://christmas.jmorris.webfactional.com/static/'
+STATIC_URL = 'https://christmas.jmorris.webfactional.com/static/'
 STATICFILES_DIRS = ( os.path.join(BASE_DIR, 'static', 'site',), )
 
-ALLOWED_HOSTS = ['http://christmas.jmorris.webfactional.com',
-                 'http://www.christmas.jmorris.webfactional.com',
-                 'https://christmas.jmorris.webfactional.com',
-                 'https://www.christmas.jmorris.webfactional.com']
+ALLOWED_HOSTS = ['christmas.jmorris.webfactional.com',
+                 'www.christmas.jmorris.webfactional.com']
 
 ADMINS = (
     ('Jim', 'jmorris@ecybermind.net'), ('Jim', 'frjamesmorris@gmail.com')

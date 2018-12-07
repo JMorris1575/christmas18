@@ -72,7 +72,7 @@ class DisplayQuestionView(View):
                 question_number = get_next_question(request.user)
                 return redirect('trivia:display_question', question_number=question_number)
             if int(question_number) < get_next_question(request.user):      # prevents answering a question twice
-                response = TriviaResponse.objects.get(question=question).response
+                response = TriviaResponse.objects.get(user=request.user, question=question).response
                 return redirect('trivia:result', question_number=question.number, choice_id=response.id)
             choices = question.triviachoice_set.all()
             context = {'memory':utilities.get_random_memory(), 'question':question, 'choices':choices}
@@ -121,12 +121,12 @@ class DisplayResultView(View):
 def previous_question_view(request, question_number):
     previous = question_number - 1
     if previous < 1:
-        previous = len(TriviaQuestion.objects.filter(publish=True))
+        previous = len(TriviaQuestion.objects.all())
     return redirect('trivia:display_question', previous)
 
 def next_question_view(request, question_number):
     next = question_number + 1
-    if next > len(TriviaQuestion.objects.filter(publish=True)):
+    if next > len(TriviaQuestion.objects.all()):
         next = 1
     return redirect('trivia:display_question', next)
 
