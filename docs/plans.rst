@@ -188,7 +188,7 @@ Here is a list:
 +------------------------------+-------------------------------------------------------------------------------------+
 | ``whatsit/<n>/``             | goes to object n's page                                                             |
 +------------------------------+-------------------------------------------------------------------------------------+
-| ``whatsit/<n>/edit_desc/``   | allows a user to create or edit their description of object n                       |
+| ``whatsit/edit/<d>/``        | allows a user to create or edit their description (d) for an object                 |
 +------------------------------+-------------------------------------------------------------------------------------+
 | ``whatsit/<n>/desc_delete/`` | allows a user to delete their description                                           |
 +------------------------------+-------------------------------------------------------------------------------------+
@@ -226,7 +226,7 @@ This seems like the order I should follow in the implementation of the What Is I
 #. Fill out the template object_list.html.
 #. Stub in a stage one object page: whatsit_one.html.
 #. Create ObjectView.
-#. Fill out the whatsit_one.html page.
+#. Fill out the stage_one.html page.
 #. Stub in a page to accept descriptions: description_edit.html. (maybe include this on whatsit_one.html?)
 #. Create DescriptionEditView (see memory.views.py).
 #. Fill out description_edit.html.
@@ -236,9 +236,9 @@ This seems like the order I should follow in the implementation of the What Is I
 #. Fill out description_delete.html.
 #. Stub in a stage two object page: whatsit_two.html.
 #. Edit ObjectView to produce stage two views.
-#. Fill out whatsit_two.html.
+#. Fill out stage_two.html.
 #. Stub in a stage three object page: whatsit_three.html.
 #. Edit ObjectView to produce stage three views.
-#. Fill out whatsit_three.html.
+#. Fill out stage_three.html.
 
 

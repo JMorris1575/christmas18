@@ -6,34 +6,41 @@
         <h2 class="card-header bg-success text-white text-center">
             Pick an Object to Play the Game
         </h2>
-        <h4 class="card-title text-success mt-3 mb-0 px-5">
-            {% if objects|length == 0 %}
-                Sorry. No objects are ready yet.
-            {% elif objects|length == 1 %}
-                Click the object preview below:
-            {% else %}
-                Click one of the object previews below:
-            {% endif %}
-        </h4>
-        {% for object in objects %}
-            <div class="row p-3">
-                <a class="col-md-3" href="{% url 'whatsit:object_view' object.number %}">
-                    <img class="col" src="{% static object.image_filename %}">
-                </a>
-                <div class="col-md-9 text-success">
-                    {% if object.stage == object.ONE %}
-                        <h5>Descriptions are being collected for this object.</h5>
-                        <p>This object has {{ object.description_count }}
-                            description{{ object.description_count|pluralize }} so far.</p>
-                    {% elif object.stage == object.TWO %}
-                        <h5>You can see and vote on the descriptions for this object.</h5>
-                        <p>maybe tell them the number of votes so far?</p>
-                    {% else %}
-                        <h5>See the final results for this object.</h5>
-                        <p>You can see who wrote the descriptions and the final tally of the votes.</p>
-                    {% endif %}
-                </div>
+        <div class="card-body">
+            <h4 class="card-title text-success mt-3 mb-0">
+                {% if objects|length == 0 %}
+                    Sorry. No objects are ready yet.
+                {% elif objects|length == 1 %}
+                    Click the button below:
+                {% else %}
+                    Click one of the object previews below:
+                {% endif %}
+            </h4>
+            <div class="card-text">
+                {% for object in objects %}
+                    <div class="row p-3">
+                        <span class="col-md-3 px-0">
+                            <img class="col px-0" src="{% static object.image_filename %}">
+                        </span>
+                        <div class="col-md-9 text-success text-center">
+                            {% if object.stage == object.ONE %}
+                                <h5>Descriptions are being collected for this object.</h5>
+                                <p>This object has {{ object.description_count }}
+                                    description{{ object.description_count|pluralize }} so far.</p>
+                                <a class="btn btn-outline-success btn-lg" href="{% url 'whatsit:object_view' object.number %}">
+                                    Add/Edit Description
+                                </a>
+                            {% elif object.stage == object.TWO %}
+                                <h5>You can see and vote on the descriptions for this object.</h5>
+                                <p>maybe tell them the number of votes so far?</p>
+                            {% else %}
+                                <h5>See the final results for this object.</h5>
+                                <p>You can see who wrote the descriptions and the final tally of the votes.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
-        {% endfor %}
+        </div>
     </div>
 {% endblock %}
