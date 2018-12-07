@@ -72,6 +72,27 @@ class SingleObjectView(View):
                             context['description'] = old_description.description
                         return render(request, self.template_name, context)
                     return redirect('whatsit:object_list')
+            elif object.stage == object.TWO:
+                self.template_name = 'whatsit/stage_two.html'
+                if request.POST['button'] == 'cancel':
+                    return redirect('whatsit:object_list')
+                try:
+                    chosen_description = Description.objects.get(id=request.POST['vote'])
+                except:                                         # they didn't cast a vote... just looking?
+                    return redirect('whatsit:object_list')
+                else:
+                    if chosen_description.author == request.user:       # they voted for their own entry
+                        descriptions = Description.objects.filter(object=object)
+                        context = {'memory': utilities.get_random_memory(), 'object': object,
+                                   'descriptions': descriptions,
+                                   'error_message': 'Sorry, you cannot vote for your own entry.'}
+                        return render(request, self.template_name, context)
+                    else:
+                        chosen_description.votes += 1
+                        chosen_description.save()
+                        contribution = Contribution(object=object, user=request.user, type=Contribution.VOTE)
+                        contribution.save()
+                        return redirect('whatsit:object_list')
 
 
 class DescriptionDeleteView(View):

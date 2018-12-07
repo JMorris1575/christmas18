@@ -47,14 +47,13 @@
                     <div class="form-group col-md-10 mx-md-auto mt-3 text-success">
                         <label for="new_description_text">Enter your description below:</label>
                         <textarea class="form-control" id="new_description_text"
-                                  name="description_text" rows="3" autofocus>
-                        </textarea>
+                                  name="description_text" rows="3" autofocus></textarea>
                     </div>
                     <div class="row justify-content-around">
-                        <button class="btn btn-outline-success btn-lg"
-                                type="submit" name="button" value="save">Save</button>
-                        <button class="btn btn-outline-success btn-lg"
+                        <button class="btn btn-outline-success btn-lg col-md-4"
                                 type="submit" name="button" value="cancel">Cancel</button>
+                        <button class="btn btn-outline-success btn-lg col-md-4"
+                                type="submit" name="button" value="save">Save</button>
                     </div>
                 </form>
             {% else %}
@@ -67,13 +66,15 @@
                         <textarea class="form-control" id="description_text"
                                   name="description_text" rows="3" autofocus>{{ description.description }}</textarea>
                     </div>
-                    <div class="row justify-content-around">
-                        <button class="btn btn-outline-success btn-lg"
-                                type="submit" name="button" value="save">Save</button>
-                        <button class="btn btn-outline-success btn-lg"
-                                type="submit" name="button" value="delete">Delete</button>
-                        <button class="btn btn-outline-success btn-lg"
-                                type="submit" name="button" value="cancel">Cancel</button>
+                    <div class="form-group">
+                        <div class="row justify-content-around">
+                            <button class="btn btn-outline-success btn-lg col-md-3"
+                                    type="submit" name="button" value="cancel">Cancel</button>
+                            <button class="btn btn-outline-success btn-lg col-md-3"
+                                    type="submit" name="button" value="delete">Delete</button>
+                            <button class="btn btn-outline-success btn-lg col-md-3"
+                                    type="submit" name="button" value="save">Save Changes</button>
+                        </div>
                     </div>
                 </form>
             {% endif %}

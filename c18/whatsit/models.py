@@ -37,16 +37,14 @@ class Object(models.Model):
         returns the combined number of votes cast on descriptions for this object
         :return: integer
         """
-        return len(Contribution.objects.filter(type=Contribution.VOTE_CORRECT) |
-                     Contribution.objects.filter(type=Contribution.VOTE_CREATIVE))
+        return len(Contribution.objects.filter(type=Contribution.VOTE))
 
 
 class Description(models.Model):
     object = models.ForeignKey(Object, on_delete=models.CASCADE)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     description = models.CharField(max_length=500)
-    voted_correct = models.SmallIntegerField(default=0)
-    voted_creative = models.SmallIntegerField(default=0)
+    votes = models.SmallIntegerField(default=0)
 
     def __str__(self):
         return self.author.username + "'s description of Object " + str(self.object.number)
@@ -54,12 +52,10 @@ class Description(models.Model):
 
 class Contribution(models.Model):
     DESCRIPTION = 'DE'
-    VOTE_CORRECT = 'CO'
-    VOTE_CREATIVE = 'CR'
+    VOTE = 'VO'
     TYPE_CHOICES = (
         (DESCRIPTION, 'Description'),
-        (VOTE_CORRECT, '"most correct" vote'),
-        (VOTE_CREATIVE, '"most creative" vote')
+        (VOTE, 'Vote')
     )
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     object = models.ForeignKey(Object, on_delete=models.CASCADE)
