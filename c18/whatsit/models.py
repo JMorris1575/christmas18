@@ -32,6 +32,14 @@ class Object(models.Model):
     def image_filename(self):
         return os.path.join('whatsit', 'images', str(self) + '.png')
 
+    def vote_count(self):
+        """
+        returns the combined number of votes cast on descriptions for this object
+        :return: integer
+        """
+        return len(Contribution.objects.filter(type=Contribution.VOTE_CORRECT) |
+                     Contribution.objects.filter(type=Contribution.VOTE_CREATIVE))
+
 
 class Description(models.Model):
     object = models.ForeignKey(Object, on_delete=models.CASCADE)

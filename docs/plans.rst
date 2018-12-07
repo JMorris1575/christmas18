@@ -234,10 +234,10 @@ This seems like the order I should follow in the implementation of the What Is I
 #. Stub in a page to confirm deletions description_delete.html.
 #. Create DescriptionDeleteView (see memory.views.py).
 #. Fill out description_delete.html.
-#. Stub in a stage two object page: whatsit_two.html.
+#. Stub in a stage two object page: stage_two.html.
 #. Edit ObjectView to produce stage two views.
 #. Fill out stage_two.html.
-#. Stub in a stage three object page: whatsit_three.html.
+#. Stub in a stage three object page: stage_three.html.
 #. Edit ObjectView to produce stage three views.
 #. Fill out stage_three.html.
 

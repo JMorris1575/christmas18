@@ -24,12 +24,14 @@ class SingleObjectView(View):
         except:
             return redirect('whatsit:object_list')
         else:
+            context = {'memory': utilities.get_random_memory(), 'object': object}
             if object.stage == object.ONE:
                 self.template_name = 'whatsit/stage_one.html'
-                context = {'memory': utilities.get_random_memory(), 'object': object, 'description': None}
                 description = Description.objects.filter(object=object, author=request.user)
                 if len(description) == 1:
                     context['description'] = description[0]
+            elif object.stage == object.TWO:
+                self.template_name = 'whatsit/stage_two.html'
 
         return render(request, self.template_name, context)
 
