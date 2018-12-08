@@ -17,6 +17,9 @@
 
             <!-- Instructions -->
             <h4 class="card-title">Select the description you think is most correct, or at least most convincing:</h4>
+            {% if not can_vote %}
+                <p>(You have already voted for one of these descriptions.)</p>
+            {% endif %}
             <hr>
 
             <!-- Voting form -->
@@ -29,16 +32,20 @@
                 {% csrf_token %}
                 {% for description in descriptions %}
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="vote" value="{{ description.id }}">
-                        <label class="form-check-label">{{ description.description }}</label>
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="radio" name="vote" value="{{ description.id }}">
+                            {{ description.description }}
+                        </label>
                     </div>
                     <hr>
                 {% endfor %}
                 <div class="row justify-content-around">
                     <button class="btn btn-outline-success btn-lg col-md-4"
-                            type="submit" name="button" value="cancel">Cancel</button>
-                    <button class="btn btn-outline-success btn-lg col-md-4"
-                            type="submit" name="button" value="save">Save</button>
+                            type="submit" name="button" value="cancel">Return</button>
+                    {% if can_vote %}
+                        <button class="btn btn-outline-success btn-lg col-md-4"
+                                type="submit" name="button" value="save">Vote</button>
+                    {% endif %}
                 </div>
             </form>
         </div>

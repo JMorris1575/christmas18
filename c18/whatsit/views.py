@@ -34,6 +34,11 @@ class SingleObjectView(View):
                 self.template_name = 'whatsit/stage_two.html'
                 descriptions = Description.objects.filter(object=object)
                 context['descriptions'] = descriptions
+                if len(Contribution.objects.filter(object=object, user=request.user, type=Contribution.VOTE)) != 0:
+                    can_vote = False
+                else:
+                    can_vote = True
+                context['can_vote'] = can_vote
 
         return render(request, self.template_name, context)
 
@@ -81,11 +86,15 @@ class SingleObjectView(View):
                 except:                                         # they didn't cast a vote... just looking?
                     return redirect('whatsit:object_list')
                 else:
+                    descriptions = Description.objects.filter(object=object)
+                    context = {'memory': utilities.get_random_memory(), 'object': object,
+                               'descriptions': descriptions}
                     if chosen_description.author == request.user:       # they voted for their own entry
-                        descriptions = Description.objects.filter(object=object)
-                        context = {'memory': utilities.get_random_memory(), 'object': object,
-                                   'descriptions': descriptions,
-                                   'error_message': 'Sorry, you cannot vote for your own entry.'}
+                        context['error_message'] = 'Sorry, you cannot vote for your own entry.'
+                        context['can_vote'] = True
+                        return render(request, self.template_name, context)
+                    elif len(Contribution.objects.filter(object=object, user=request.user, type = Contribution.VOTE)) != 0:
+                        context['error_message'] = 'Sorry, you already voted for one of these.'
                         return render(request, self.template_name, context)
                     else:
                         chosen_description.votes += 1
