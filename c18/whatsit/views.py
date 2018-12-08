@@ -39,7 +39,10 @@ class SingleObjectView(View):
                 else:
                     can_vote = True
                 context['can_vote'] = can_vote
-
+            else:                                   # must be in stage THREE
+                self.template_name = 'whatsit/stage_three.html'
+                descriptions = Description.objects.filter(object=object)
+                context['descriptions'] = descriptions
         return render(request, self.template_name, context)
 
     def post(self, request, object_number):
@@ -102,6 +105,9 @@ class SingleObjectView(View):
                         contribution = Contribution(object=object, user=request.user, type=Contribution.VOTE)
                         contribution.save()
                         return redirect('whatsit:object_list')
+            else:
+                self.template_name = 'whatsit/stage_three.html'
+                return redirect('whatsit:object_list')
 
 
 class DescriptionDeleteView(View):

@@ -42,6 +42,10 @@
                             {% else %}
                                 <h5>See the final results for this object.</h5>
                                 <p>You can see who wrote the descriptions and the final tally of the votes.</p>
+                                <a class="btn btn-outline-success btn-lg"
+                                   href="{% url 'whatsit:object_view' object.number %}">
+                                    See Results
+                                </a>
                             {% endif %}
                         </div>
                     </div>
