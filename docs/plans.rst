@@ -323,3 +323,42 @@ Response model:
 #. guess: (SmallIntegerField for the number of the recipe they guessed)
 #. correct: (BooleanField True if their guess is right, False otherwise)
 
+Git Branching
+*************
+
+After Git Pulling the latest revision of the program from Github, running a migrate and updating the database to match
+what was on the online website last night, I clicked on the Git button(?) in the lower right corner of PyCharm and
+selected + New Branch. I gave it a name of ``recipe`` and left the Checkout box selected. Hopefully this will result in
+less hassle when I try to merge this into the original program later.
+
+Implementation Plans
+********************
+
+Here is a plan I can follow during implementation. (The original form worked for What Is It? so I just copy-pasted it
+before editing it.
+
+#. Create the app ``recipes`` and add it to InstalledApps
+#. Create the models.
+#. Register the models with the admin including the ability to enter Recipes within QuizPages.
+#. Make migrations and migrate the changes to the database.
+#. Add the migrations to git.
+#. Create a static folder for the images.
+#. Add a set of recipes to a QuizPage in the database
+#. Create the URL patterns to arrive at the scoreboard page.
+#. Link to the scoreboard page from the activity list page.
+#. Stub in the template recipes/scoreboard.html.
+#. Create RecipesScoreboardView.
+#. Fill out the template recipes/scoreboard.html.
+#. Stub in a QuizPage: recipes/quiz_page.html.
+#. Create QuizPageView.
+#. Fill out the recipes/quiz_page.html page.
+#. Create the post method of QuizPageView to recieve and save people's guesses.
+#. Stub in a recipes/quiz_results.html page. This will have "See the Recipe" buttons to display individual recipes.
+#. Create a QuizResultsView.
+#. Fill out recipes/quiz_results.html page.
+#. Stub in a recipes/recipe_view.html page. This will display large images of individual recipes.
+#. Create a RecipeView to produce views of the recipe images.
+#. Fill out the recipes/recipe_view.html page.
+
+
+
