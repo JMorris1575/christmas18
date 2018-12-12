@@ -15,8 +15,24 @@
                 </div>
             </div>
 
+        <!-- Expandable Instructions -->
+        <a data-toggle="collapse" href="#description"><h3>Show/Hide Instructions...</h3></a>
+        <div class="row info-box m-3 h5 text-success collapse" id="description">
+            <p>
+                Which description, besides your own if you wrote one, most believably describes the object above? You
+                get only one vote and your vote will be anonymous. In other words, the system will record that you voted
+                but will not record whose description you voted for. That means, however, that your vote cannot be
+                changed once it is cast so be careful. Note that you must vote for someone else's description, not your
+                own no matter how believable you think it may be.
+            </p>
+            <p>
+                Once I get a good number of votes I will display the results, identifying the author of each
+                description, the number of votes each one got, and a description of what the object really is.
+            </p>
+        </div>
+
             <!-- Instructions -->
-            <h4 class="card-title">Select the description you think is most correct, or at least most convincing:</h4>
+            <h4 class="card-title">Select the description you think is most believable:</h4>
             {% if not can_vote %}
                 <p>(You have already voted for one of these descriptions.)</p>
             {% endif %}

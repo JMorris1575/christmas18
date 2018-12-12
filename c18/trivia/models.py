@@ -10,7 +10,7 @@ class TriviaQuestion(models.Model):
     publish = models.BooleanField(default=False)
     attempted_count = models.IntegerField(default=0)
     correct_count = models.IntegerField(default=0)
-    explanation = models.CharField(max_length=255, default="")
+    explanation = models.CharField(max_length=255, default="", blank=True)
     link = models.URLField(default="", blank=True)
 
     def __str__(self):

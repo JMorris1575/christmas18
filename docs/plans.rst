@@ -241,4 +241,85 @@ This seems like the order I should follow in the implementation of the What Is I
 #. Edit ObjectView to produce stage three views.
 #. Fill out stage_three.html.
 
+Planning the Guess the Recipe Activity
+--------------------------------------
+
+Janet gave me some of Aunt Helen O'Brien's old recipes and I'm thinking that I could list the ingredients for each
+recipe, and give a list of possible names for the dish for family members to select. It would be like a matching quiz.
+
+Narrative Runthrough
+********************
+
+A family member comes to the website and clicks "Activities" on the menu. Among the other activities listed is one
+called "Guess the Recipe." When they click on the button that says "Play 'Guess the Recipe'" they are taken to a
+scoreboard page listing the scores for each family member so far if there are any. Perhaps there can also be an
+explanation of the game on that page, complete with a picture of Aunt Helen. A button appears that either says "First
+Set" or "Next Set" like the Trivia game.
+
+Upon clicking that button the family member is taken to a page listing several sets of recipe ingredients in
+alphabetical order. At this point I don't know if I will include amounts or not but, at the moment, I'm thinking it
+might be more interesting if I don't give the amounts.
+
+At the top of the page is a list of the names for what Aunt Helen might have been making with each of the recipes.
+Within the card for each recipe's ingredients (designed to look like a recipe card?) is a selection box where family
+members can select which name goes with which ingredients. At the bottom of the page is a Submit Guesses button. To keep
+things simple, it will be possible to guess the same name for several sets of ingredients.
+
+Upon making their guesses they are sent to a results page which shows the correct answer for each list of ingredients
+and provides a button where the family member can view the complete recipe. Perhaps the recipe can be printed out if I
+learn how to do printer friendly html, or a photo, or photos, of Aunt Helen's own recipes can be shown and family
+members can print or download them.
+
+URL Design
+**********
+
+The base name for this section can be ``recipes``. Here is a chart of the possible URLs and what they lead to:
+
++---------------------------------+---------------------------------------------------------------------------------+
+| URL                             | Destination                                                                     |
++=================================+=================================================================================+
+| recipe/                         | Redirects to scoreboard page                                                    |
++---------------------------------+---------------------------------------------------------------------------------+
+| recipe/scoreboard               | The "Guess the Recipe" scoreboard and launch page                               |
++---------------------------------+---------------------------------------------------------------------------------+
+| recipe/quiz/<n>                 | Quiz page for the nth set of 5(?)recipes                                        |
++---------------------------------+---------------------------------------------------------------------------------+
+| recipe/results/<n>              | The results page for the nth set of recipes                                     |
++---------------------------------+---------------------------------------------------------------------------------+
+| recipe/view/<n>                 | The page where the original recipes can be seen                                 |
++---------------------------------+---------------------------------------------------------------------------------+
+
+Model Design
+************
+
+I will need a Recipe model to contain the list of ingredients and a ForeignKey reference to the QuizPage on which it is
+to appear. The recipe's name can be kept in a CharField and the list of ingredients can be held in a TextField. It will
+also be helpful to have a recipe_number (see below). There can also be a function to create the filename for the
+recipe's image for use on the recipe_view page.
+
+The QuizPage model will have a SmallIntegerField for its number (the order in which it appears) and that seems to be
+about it. The QuizPage serves mainly as a place to collect recipes.
+
+I will also need to keep track of family member's guesses and whether they were right or wrong. These need not be
+anonymous but, once the submit button is pressed, they may not change their answers. This seems to call for a Response
+model to contain a ForeignKey to the User, a ForeignKey to the Recipe on which they are guessing, a SmallIntegerField
+indicating the number of the recipe they guessed to match it. If their guess matches the recipe number then a
+BooleanField named correct is set to True, otherwise is it False.
+
+Here is a first attempt at a design for these three models:
+
+QuizPage model:
+#. page_number: (SmallIntegerField)
+
+Recipe model:
+#. number: (SmallIntegerField)
+#. name: (CharField max_length=40)
+#. ingredients: (TextField)
+#. quiz_page: ForeignKey to QuizPage model
+
+Response model:
+#. user: (ForiegnKey to auth.User)
+#. recipe: (ForiegnKey to Recipe on which they are guessing)
+#. guess: (SmallIntegerField for the number of the recipe they guessed)
+#. correct: (BooleanField True if their guess is right, False otherwise)
 

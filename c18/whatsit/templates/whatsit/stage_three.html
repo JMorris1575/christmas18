@@ -16,7 +16,7 @@
             </div>
 
             <!-- Introduction -->
-            <h4 class="card-title">Here are the results for {{ object }}:</h4>
+            <h4 class="card-title">Results for {{ object }}:</h4>
             <table class="table text-success">
                 <thead>
                     <tr>
@@ -38,6 +38,12 @@
             <hr>
             <h4>What is it really?</h4>
             <p>{{ object.correct_description }}</p>
+
+            <div class="row justify-content-around">
+                <a class="btn btn-outline-success col-md-4" href="{% url 'whatsit:object_list' %}">
+                    Return to Object List
+                </a>
+            </div>
         </div>
     </div>
 {% endblock %}

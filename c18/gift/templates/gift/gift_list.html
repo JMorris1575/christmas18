@@ -70,8 +70,21 @@
                     <div class="col-sm">
                         <p class="text-success">{{ gift.description|safe }}</p>
                         {% if gift.get_comments %}
-                            <a data-toggle="collapse" href="#Gift{{ gift.gift_number }}_remarks">Toggle remarks...</a>
-                            <div class="collapse" id="Gift{{ gift.gift_number }}_remarks">
+                            {% if gift.get_comments|length > 4 %}
+                                <a data-toggle="collapse" href="#Gift{{ gift.gift_number }}_remarks">Toggle remarks...</a>
+                                <div class="collapse" id="Gift{{ gift.gift_number }}_remarks">
+                                    {% for comment in gift.get_comments %}
+                                        {% if comment.user == user %}
+                                            <p class="comment">
+                                                {{ comment.display }}
+                                                <a href="{% url 'gift:edit_comment' gift.gift_number comment.pk %}"> (Edit...)</a>
+                                            </p>
+                                        {% else %}
+                                            <p class="comment">{{ comment.display }}</p>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            {% else %}
                                 {% for comment in gift.get_comments %}
                                     {% if comment.user == user %}
                                         <p class="comment">
@@ -82,7 +95,7 @@
                                         <p class="comment">{{ comment.display }}</p>
                                     {% endif %}
                                 {% endfor %}
-                            </div>
+                            {% endif %}
                         {% endif %}
                     </div>
 
