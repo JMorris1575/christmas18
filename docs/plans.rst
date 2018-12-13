@@ -342,7 +342,7 @@ before editing it.
 #. Register the models with the admin including the ability to enter Recipes within QuizPages.
 #. Make migrations and migrate the changes to the database.
 #. Add the migrations to git.
-#. Create a static folder for the images.
+#. Create a static folder for the images. Add the images of the recipes and of Aunt Helen.
 #. Add a set of recipes to a QuizPage in the database
 #. Create the URL patterns to arrive at the scoreboard page.
 #. Link to the scoreboard page from the activity list page.

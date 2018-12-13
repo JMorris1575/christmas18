@@ -6,10 +6,11 @@ import os
 
 class QuizPage(models.Model):
     page_number = models.SmallIntegerField(unique=True)
+    title = models.CharField(max_length=40)
 
 
     def __str__(self):
-        return 'Quiz Page ' + str(self.page_number)
+        return 'Quiz Page: ' + self.title
 
 
 class Recipe(models.Model):
@@ -17,6 +18,7 @@ class Recipe(models.Model):
     name = models.CharField(max_length=40, unique=True)
     ingredients = models.TextField()
     quiz_page = models.ForeignKey(QuizPage, on_delete=models.CASCADE)
+    recipe_image_filename = models.CharField(max_length=60, default="", blank=True)
 
     def __str__(self):
         return 'Recipe for ' + self.name
