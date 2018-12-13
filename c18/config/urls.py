@@ -25,5 +25,6 @@ urlpatterns = [
     path('memories/', include('memory.urls')),
     path('mail/', include('mail.urls')),
     path('whatsit/', include('whatsit.urls')),
+    path('recipes/', include('recipes.urls')),
     path('admin/', admin.site.urls),
 ]

@@ -34,3 +34,6 @@ class Response(models.Model):
 
     def __str__(self):
         return self.user.username + "'s guess on " + str(self.recipe)
+
+    def quiz_number(self):
+        return self.recipe.quiz_page.page_number

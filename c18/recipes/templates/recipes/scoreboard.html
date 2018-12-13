@@ -1,0 +1,51 @@
+{% extends parent_template|default:"base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="card col-md-10 mx-md-auto mb-3 px-0 border-success">
+        <h2 class="card-header bg-success text-white">Recipe Game</h2>
+        <div class="info-box m-3 h5 text-success">
+            <p class="card-title">
+                Each quiz will consist of a number of recipe names that will match an equal number of ingredient lists.
+                Your job is to match each recipe name to the correct ingredient list. Watch out though, I leave certain
+                ingredients off the list if their presence would be a dead giveaway. For instance, a recipe for
+                something called "Strawberry Flambeau," will not have "Strawberries" listed in its ingredient list.
+            </p>
+            <p class="card-title">
+                Click on the "Take Quiz" button if it appears below or the "See My Results" button if you have already
+                taken at least one quiz.
+            </p>
+        </div>
+        <hr>
+        <div class="col-md-10 mx-md-auto">
+            <div class="row justify-content-center">
+                <h2 class="mx-auto text-success">Player Rankings</h2>
+            </div>
+            {% if stats %}
+                {% for stat in stats %}
+                    {% if stat.type == "heading" %}
+                        <hr>
+                        <div class="row justify-content-center">
+                            <h3 class="text-success">{{ stat.value }}</h3>
+                        </div>
+                    {% else %}
+                        <div class="row justify-content-center">
+                            <h4 class="text-success">{{ stat.value.name }}:  {{ stat.value.percent }}</h4>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <p class="text-success">No rankings yet available.</p>
+            {% endif %}
+            </div>
+            <hr>
+            {% if next_quiz %}
+                <div class="col-md-10 mx-md-auto">
+                    <div class="row justify-content-around mb-3">
+                        <a class="btn btn-outline-success text-center" href="{% url 'recipes:quiz_page' next_quiz %}">Take Quiz</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
