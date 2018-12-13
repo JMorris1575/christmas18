@@ -43,8 +43,8 @@ class ScoreboardView(View):
                 percent = '0.0%'
             name = get_adjusted_name(user)
             if attempted_recipes > 0:
-                temp.append( {'attempted_questions':attempted_recipes, 'correct':correct, 'percent':percent, 'name':name} )
-        temp_sorted = sorted(temp, key = itemgetter('attempted_questions', 'correct'), reverse=True)
+                temp.append({'attempted_recipes':attempted_recipes, 'correct':correct, 'percent':percent, 'name':name})
+        temp_sorted = sorted(temp, key = itemgetter('attempted_recipes', 'correct'), reverse=True)
         stats = []
         attempt_group = -1
         total = len(Recipe.objects.all())
