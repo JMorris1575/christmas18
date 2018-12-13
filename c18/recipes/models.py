@@ -14,7 +14,6 @@ class QuizPage(models.Model):
 
 
 class Recipe(models.Model):
-    number = models.SmallIntegerField(unique=True)          # only needed to identify recipe images
     name = models.CharField(max_length=40, unique=True)
     ingredients = models.TextField()
     quiz_page = models.ForeignKey(QuizPage, on_delete=models.CASCADE)
