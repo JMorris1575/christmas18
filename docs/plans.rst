@@ -278,15 +278,15 @@ The base name for this section can be ``recipes``. Here is a chart of the possib
 +---------------------------------+---------------------------------------------------------------------------------+
 | URL                             | Destination                                                                     |
 +=================================+=================================================================================+
-| recipes/                         | Redirects to scoreboard page                                                    |
+| recipes/                        | Redirects to scoreboard page                                                    |
 +---------------------------------+---------------------------------------------------------------------------------+
-| recipes/scoreboard               | The "Guess the Recipe" scoreboard and launch page                               |
+| recipes/scoreboard              | The "Guess the Recipe" scoreboard and launch page                               |
 +---------------------------------+---------------------------------------------------------------------------------+
-| recipes/quiz/<n>                 | Quiz page for the nth set of 5(?)recipes                                        |
+| recipes/quiz/<n>                | Quiz page for the nth set of 5(?)recipes                                        |
 +---------------------------------+---------------------------------------------------------------------------------+
-| recipes/results/<n>              | The results page for the nth set of recipes                                     |
+| recipes/results/<n>             | The results page for the nth set of recipes                                     |
 +---------------------------------+---------------------------------------------------------------------------------+
-| recipes/view/<n>                 | The page where the original recipes can be seen                                 |
+| recipes/view/                   | The page where the original recipes can be seen                                 |
 +---------------------------------+---------------------------------------------------------------------------------+
 
 Model Design
