@@ -1,0 +1,42 @@
+{% extends parent_template|default:"base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="card col-md-10 mx-md-auto mb-3 px-0 border-success">
+        <h2 class="card-header bg-success text-white">Recipe Quiz {{ quiz.quiz_number }}</h2>
+        <div class="info-box m-3 h5 text-success">
+            <p class="card-title">
+                Here are the recipes to match to each of the following sets of ingredients:
+            </p>
+            {% for recipe in recipes %}
+                <p class="card-title text-center">
+                    {{ recipe.name }}
+                </p>
+            {% endfor %}
+            <p class="card-title">
+                In the selection boxes below, select which or these recipes you think goes with each set of ingredients.
+            </p>
+        </div>
+        <hr>
+        <div class="card-body">
+            <form action="{% url 'recipes:quiz_page' quiz.quiz_number %}" method="post">
+                {% csrf_token %}
+                {% for outer_recipe in recipes %}
+                    <div class="row justify-content-center">
+                        <div class="col preserve-whitespace card-text text-success">{{ outer_recipe.ingredients }}</div>
+                        <select class="col form-control form-control-lg text-success" name="{{ outer_recipe.name }}">
+                            <option>--------</option>
+                            {% for inner_recipe in recipes %}
+                                <option value="{{ inner_recipe.name }}">{{ inner_recipe.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <hr>
+                {% endfor %}
+                <div class="row justify-content-center">
+                    <input class="btn btn-outline-success btn-lg mt-3" type="submit" value="Submit" name="recipe_submit"/>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

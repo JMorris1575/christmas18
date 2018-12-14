@@ -6853,7 +6853,8 @@ header .nav-link {
 .navbar-toggler-icon {
   color: #ffdd55; }
 
+.preserve-whitespace {
+  white-space: pre-wrap; }
+
 .text-blue {
   color: blue; }
-
-/*# sourceMappingURL=styles.css.map */

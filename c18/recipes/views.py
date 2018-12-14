@@ -58,10 +58,18 @@ class ScoreboardView(View):
         return stats, next_quiz
 
 
-
-
 class QuizPageView(View):
-    pass
+    template_name = 'recipes/quiz_page.html'
+
+    def get(self, request, quiz_number):
+        quiz = QuizPage.objects.get(quiz_number=quiz_number)
+        recipes = Recipe.objects.filter(quiz_page=quiz)
+        context = {'memory':utilities.get_random_memory(), 'quiz':quiz, 'recipes':recipes}
+        return render(request, self.template_name, context)
+
+    def post(self, request, quiz_number):
+        print('request.POST = ', request.POST)
+        return redirect('recipes:quiz_page', quiz_number=quiz_number)
 
 
 class QuizResultsView(View):

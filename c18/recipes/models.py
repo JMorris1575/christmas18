@@ -5,7 +5,7 @@ import os
 
 
 class QuizPage(models.Model):
-    page_number = models.SmallIntegerField(unique=True)
+    quiz_number = models.SmallIntegerField(unique=True)
     title = models.CharField(max_length=40)
 
 

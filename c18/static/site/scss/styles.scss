@@ -99,6 +99,10 @@ header .nav-link {
     color: $secondary;
 }
 
+.preserve-whitespace {
+    white-space: pre-wrap;
+}
+
 .text-blue {
     color: blue;
 }
