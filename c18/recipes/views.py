@@ -64,11 +64,29 @@ class QuizPageView(View):
     def get(self, request, quiz_number):
         quiz = QuizPage.objects.get(quiz_number=quiz_number)
         recipes = Recipe.objects.filter(quiz_page=quiz)
-        context = {'memory':utilities.get_random_memory(), 'quiz':quiz, 'recipes':recipes}
+        recipe_names = []
+        for recipe in recipes:
+            recipe_names.append(recipe.name)
+        recipe_names.sort()
+        context = {'memory':utilities.get_random_memory(), 'quiz':quiz, 'recipes':recipes, 'recipe_names': recipe_names}
         return render(request, self.template_name, context)
 
     def post(self, request, quiz_number):
-        print('request.POST = ', request.POST)
+        quiz = QuizPage.objects.get(quiz_number=quiz_number)
+        recipes = Recipe.objects.filter(quiz_page=quiz)
+        guesses = {}
+        recipe_names = []
+        for recipe in recipes:
+            guesses[recipe.name] = request.POST[recipe.name]
+            recipe_names.append(recipe.name)
+        recipe_names.sort()
+        if "" in guesses.values():
+            context = {'memory': utilities.get_random_memory(), 'quiz': quiz, 'recipes': recipes, 'guesses': guesses,
+                       'recipe_names': recipe_names, 'error': 'You must guess a recipe for this.'}
+            return render(request, self.template_name, context)
+
+        # for recipe in recipes:
+        #     print(recipe.name, ' was identified as ', request.POST[recipe.name])
         return redirect('recipes:quiz_page', quiz_number=quiz_number)
 
 
