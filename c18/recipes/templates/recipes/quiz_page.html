@@ -38,6 +38,8 @@
                                     {% else %}
                                         <option value="{{ name }}">{{ name }}</option>
                                     {% endif %}
+                                {% else %}
+                                    <option value="{{ name }}">{{ name }}</option>
                                 {% endif %}
                             {% endfor %}
                         </select>
