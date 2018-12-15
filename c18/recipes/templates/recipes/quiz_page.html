@@ -33,7 +33,7 @@
                             <option></option>
                             {% for name in recipe_names %}
                                 {% if guesses %}
-                                    {% if guesses.recipe.name == name %}
+                                    {% if guesses.recipe.f.name == name %}
                                         <option value="{{ name }}" selected>{{ name }}</option>
                                     {% else %}
                                         <option value="{{ name }}">{{ name }}</option>
