@@ -29,11 +29,12 @@
                     {% endif %}
                     <div class="row justify-content-center">
                         <div class="col preserve-whitespace card-text text-success">{{ recipe.ingredients }}</div>
+                        guesses = {{ guesses }}
                         <select class="col form-control form-control-lg text-success" name="{{ recipe.name }}">
                             <option></option>
                             {% for name in recipe_names %}
                                 {% if guesses %}
-                                    {% if guesses.recipe.f.name == name %}
+                                    {% if guesses.recipe.name == name %}
                                         <option value="{{ name }}" selected>{{ name }}</option>
                                     {% else %}
                                         <option value="{{ name }}">{{ name }}</option>
