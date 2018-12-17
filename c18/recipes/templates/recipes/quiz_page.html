@@ -1,5 +1,6 @@
 {% extends parent_template|default:"base.html" %}
 {% load static %}
+{% load recipes_extras %}
 
 {% block content %}
     <div class="card col-md-10 mx-md-auto mb-3 px-0 border-success">
@@ -21,20 +22,19 @@
         <div class="card-body">
             <form action="{% url 'recipes:quiz_page' quiz.quiz_number %}" method="post">
                 {% csrf_token %}
+                {% if error %}
+                    <div class="text-danger">
+                        <p><strong>{{ error }}</strong></p>
+                    </div>
+                {% endif %}
                 {% for recipe in recipes %}
-                    {% if error %}
-                        <div class="text-danger">
-                            <p><strong>{{ error }}</strong></p>
-                        </div>
-                    {% endif %}
                     <div class="row justify-content-center">
                         <div class="col preserve-whitespace card-text text-success">{{ recipe.ingredients }}</div>
-                        guesses = {{ guesses }}
                         <select class="col form-control form-control-lg text-success" name="{{ recipe.name }}">
                             <option></option>
                             {% for name in recipe_names %}
                                 {% if guesses %}
-                                    {% if guesses.recipe.name == name %}
+                                    {% if guesses|recipe_name:recipe == name %}
                                         <option value="{{ name }}" selected>{{ name }}</option>
                                     {% else %}
                                         <option value="{{ name }}">{{ name }}</option>
