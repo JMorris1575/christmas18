@@ -32,7 +32,7 @@ class ScoreboardView(View):
                 next_quiz = None
                 if attempted_recipes > 0:
                     for quiz in QuizPage.objects.all():
-                        if len(user_responses.recipe.filter(quiz_page=quiz)) != 0:
+                        if len(user_responses.filter(recipe__quiz_page=quiz)) != 0:
                             current_user_quizzes += 1
                 if len(QuizPage.objects.all()) > current_user_quizzes:
                     next_quiz = current_user_quizzes + 1
@@ -80,20 +80,32 @@ class QuizPageView(View):
             guesses[recipe.name] = request.POST[recipe.name]
             recipe_names.append(recipe.name)
         recipe_names.sort()
-        print('guesses = ', guesses)
-        print('recipe_names = ', recipe_names)
         if "" in guesses.values():
             context = {'memory': utilities.get_random_memory(), 'quiz': quiz, 'recipes': recipes, 'guesses': guesses,
                        'recipe_names': recipe_names, 'error': 'You must guess a recipe for each set of indredients.'}
             return render(request, self.template_name, context)
 
-        # for recipe in recipes:
-        #     print(recipe.name, ' was identified as ', request.POST[recipe.name])
-        return redirect('recipes:quiz_page', quiz_number=quiz_number)
+        for recipe in recipes:
+            response = Response(user=request.user, recipe=recipe, guess=request.POST[recipe.name])
+            if recipe.name == request.POST[recipe.name]:
+                response.correct = True
+            else:
+                response.correct = False
+            response.save()
+        return redirect('recipes:quiz_results', quiz_number=quiz_number)
 
 
 class QuizResultsView(View):
-    pass
+    template_name = 'recipes/quiz_results.html'
+
+    def get(self, request, quiz_number):
+        quiz = QuizPage.objects.get(quiz_number=quiz_number)
+        recipes = Recipe.objects.filter(quiz_page=quiz)
+        guesses = []
+        for response in Response.objects.filter(recipe__quiz_page=quiz):
+            guesses.append(response.guess)
+        context = {'memory':utilities.get_random_memory(), 'quiz': quiz, 'recipes': recipes, 'guesses': guesses}
+        return render(request, self.template_name, context)
 
 
 class RecipeView(View):

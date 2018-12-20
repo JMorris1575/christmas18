@@ -6,10 +6,11 @@
         <h2 class="card-header bg-success text-white">Recipe Game</h2>
         <div class="info-box m-3 h5 text-success">
             <p class="card-title">
-                Each quiz will consist of a number of recipe names that will match an equal number of ingredient lists.
-                Your job is to match each recipe name to the correct ingredient list. Watch out though, I leave certain
-                ingredients off the list if their presence would be a dead giveaway. For instance, a recipe for
-                something called "Strawberry Flambeau," will not have "Strawberries" listed in its ingredient list.
+                Each quiz will consist of a set of ingredient lists from a number of different recipes. Your job is to
+                select the correct recipe name for each ingredient list. Watch out though, I leave certain ingredients
+                off the list if their presence would be a dead giveaway. For instance, a recipe for something called
+                "Strawberry Flambeau," will not have "Strawberries" listed in its ingredient list since its presence
+                there would make the correct choice a little obvious.
             </p>
             <p class="card-title">
                 Click on the "Take Quiz" button if it appears below or the "See My Results" button if you have already
@@ -39,13 +40,15 @@
             {% endif %}
             </div>
             <hr>
-            {% if next_quiz %}
-                <div class="col-md-10 mx-md-auto">
-                    <div class="row justify-content-around mb-3">
-                        <a class="btn btn-outline-success text-center" href="{% url 'recipes:quiz_page' next_quiz %}">Take Quiz</a>
-                    </div>
+            <div class="col-md-10 mx-md-auto">
+                <div class="row justify-content-around mb-3">
+                {% if next_quiz %}
+                    <a class="btn btn-outline-success text-center" href="{% url 'recipes:quiz_page' next_quiz %}">Take Quiz</a>
+                {% else %}
+                    <a class="btn btn-outline-success text-center" href="{% url 'recipes:quiz_results' 1 %}">See My Results</a>
+                {% endif %}
                 </div>
-            {% endif %}
+            </div>
         </div>
     </div>
 {% endblock %}

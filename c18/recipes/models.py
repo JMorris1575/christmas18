@@ -29,7 +29,7 @@ class Recipe(models.Model):
 class Response(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
-    guess = models.SmallIntegerField()
+    guess = models.CharField(max_length=40)
     correct = models.BooleanField()
 
     def __str__(self):

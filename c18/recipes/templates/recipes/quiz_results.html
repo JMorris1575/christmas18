@@ -1,0 +1,17 @@
+{% extends parent_template|default:"base.html" %}
+{% load static %}
+{% load recipes_extras %}
+
+{% block content %}
+    <div class="card col-md-10 mx-md-auto mb-3 px-0 border-success">
+        <h2 class="card-header bg-success text-white">Results for Recipe Quiz {{ quiz.quiz_number }}: {{ quiz.title }}</h2>
+        <div class="info-box m-3 h5 text-success">
+            <p class="card-title">
+                Here are your results for Recipe Quiz {{ quiz.quiz_number }}:
+            </p>
+        </div>
+        <hr>
+        <div class="card-body">
+        </div>
+    </div>
+{% endblock %}
