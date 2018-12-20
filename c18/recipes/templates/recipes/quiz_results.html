@@ -1,17 +1,44 @@
 {% extends parent_template|default:"base.html" %}
 {% load static %}
-{% load recipes_extras %}
 
 {% block content %}
     <div class="card col-md-10 mx-md-auto mb-3 px-0 border-success">
         <h2 class="card-header bg-success text-white">Results for Recipe Quiz {{ quiz.quiz_number }}: {{ quiz.title }}</h2>
         <div class="info-box m-3 h5 text-success">
             <p class="card-title">
-                Here are your results for Recipe Quiz {{ quiz.quiz_number }}:
+                You got {{ correct }} right out of {{ results|length }} on Recipe Quiz {{ quiz.quiz_number }}.
+                Here is the breakdown:
             </p>
         </div>
         <hr>
         <div class="card-body">
+            {% for recipe, guess in results %}
+                <div class="row card-text text-success justify-content-center">
+                    <div class="col-0 col-lg-3 preserve-whitespace
+                    text-center text-left-lg mb-3 mb-lg-0">{{ recipe.ingredients }}</div>
+                    <div class="col-0 col-lg-6">
+                        <div class="row justify-content-center">
+                            You guessed: {{ guess }}
+                        </div>
+                        <div class="row justify-content-center">
+                            for {{ recipe.name }}
+                        </div>
+                        <div class="row justify-content-center">
+                            {% if recipe.name == guess %}
+                                You are Right!
+                            {% else %}
+                                Sorry, you guessed wrong.
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-0 col-lg-3 text-center mt-3 mt-lg-0">
+                        <a class="btn btn-outline-success btn-lg" href="{% url 'recipes:recipe_view' recipe.id %}">
+                            Original Recipe
+                        </a>
+                    </div>
+                </div>
+                <hr>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

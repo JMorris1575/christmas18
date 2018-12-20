@@ -23,7 +23,7 @@ class Recipe(models.Model):
         return 'Recipe for ' + self.name
 
     def get_recipe_image_filename(self):
-        return os.path.join('recipes', 'images', 'Recipe' + str(self.number))
+        return os.path.join('recipes', 'images', 'recipe_images', self.recipe_image_filename)
 
 
 class Response(models.Model):

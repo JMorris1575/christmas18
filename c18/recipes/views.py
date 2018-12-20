@@ -82,7 +82,7 @@ class QuizPageView(View):
         recipe_names.sort()
         if "" in guesses.values():
             context = {'memory': utilities.get_random_memory(), 'quiz': quiz, 'recipes': recipes, 'guesses': guesses,
-                       'recipe_names': recipe_names, 'error': 'You must guess a recipe for each set of indredients.'}
+                       'recipe_names': recipe_names, 'error': 'You must guess a recipe for each set of ingredients.'}
             return render(request, self.template_name, context)
 
         for recipe in recipes:
@@ -100,13 +100,22 @@ class QuizResultsView(View):
 
     def get(self, request, quiz_number):
         quiz = QuizPage.objects.get(quiz_number=quiz_number)
-        recipes = Recipe.objects.filter(quiz_page=quiz)
-        guesses = []
-        for response in Response.objects.filter(recipe__quiz_page=quiz):
-            guesses.append(response.guess)
-        context = {'memory':utilities.get_random_memory(), 'quiz': quiz, 'recipes': recipes, 'guesses': guesses}
+        results = []
+        correct = 0
+        for response in Response.objects.filter(user=request.user, recipe__quiz_page=quiz):
+            results.append((response.recipe, response.guess))
+            if response.recipe.name == response.guess:
+                correct += 1
+        context = {'memory':utilities.get_random_memory(), 'quiz': quiz, 'results': results, 'correct': correct}
         return render(request, self.template_name, context)
 
 
 class RecipeView(View):
-    pass
+    template_name = 'recipes/recipe_view.html'
+
+    def get(self, request, recipe_id):
+        recipe = Recipe.objects.get(id=recipe_id)
+        quiz = recipe.quiz_page
+        print('quiz.quiz_number = ', quiz.quiz_number)
+        context = {'memory': utilities.get_random_memory(), 'recipe': recipe, 'quiz_number': quiz.quiz_number}
+        return render(request, self.template_name, context)

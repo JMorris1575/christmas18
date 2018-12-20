@@ -12,5 +12,5 @@ urlpatterns = [
     path('scoreboard/', login_required(ScoreboardView.as_view()), name='scoreboard'),
     path('quiz/<int:quiz_number>/', login_required(QuizPageView.as_view()), name='quiz_page'),
     path('results/<int:quiz_number>/', login_required(QuizResultsView.as_view()), name='quiz_results'),
-    path('view/', login_required(RecipeView.as_view()), name='recipe_view'),
+    path('view/<int:recipe_id>/', login_required(RecipeView.as_view()), name='recipe_view'),
 ]

@@ -29,7 +29,8 @@
                 {% endif %}
                 {% for recipe in recipes %}
                     <div class="row justify-content-center">
-                        <div class="col preserve-whitespace card-text text-success">{{ recipe.ingredients }}</div>
+                        <div class="col preserve-whitespace
+                            card-text text-center text-success">{{ recipe.ingredients }}</div>
                         <select class="col form-control form-control-lg text-success" name="{{ recipe.name }}">
                             <option></option>
                             {% for name in recipe_names %}
