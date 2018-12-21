@@ -17,8 +17,9 @@ class ScoreboardView(View):
     template_name = 'recipes/scoreboard.html'
 
     def get(self, request):
-        stats, next_quiz = self.get_stats(request.user)
-        context = {'memory':utilities.get_random_memory(), 'stats':stats, 'next_quiz':next_quiz}
+        stats, next_quiz, pages_done = self.get_stats(request.user)
+        context = {'memory':utilities.get_random_memory(), 'stats':stats, 'next_quiz':next_quiz,
+                   'pages_done': pages_done}
         return render(request, self.template_name, context)
 
     def get_stats(self, current_user):
@@ -27,15 +28,15 @@ class ScoreboardView(View):
         for user in users:
             user_responses = Response.objects.filter(user=user)
             attempted_recipes = len(user_responses)
-            if user == current_user:
+            if user == current_user:            # get information about the current user
                 current_user_quizzes = 0
                 next_quiz = None
-                if attempted_recipes > 0:
+                if attempted_recipes > 0:       # if they've done anything find out how many quiz pages they've done
                     for quiz in QuizPage.objects.all():
                         if len(user_responses.filter(recipe__quiz_page=quiz)) != 0:
                             current_user_quizzes += 1
-                if len(QuizPage.objects.all()) > current_user_quizzes:
-                    next_quiz = current_user_quizzes + 1
+                if len(QuizPage.objects.all()) > current_user_quizzes:      # if there are more quiz pages for them
+                    next_quiz = current_user_quizzes + 1                    #    point to the next quiz page
             correct = len(user_responses.filter(correct=True))
             if attempted_recipes != 0:
                 percent = '{:.1%}'.format(correct/attempted_recipes)
@@ -55,7 +56,7 @@ class ScoreboardView(View):
                 attempt_group = stat['attempted_recipes']
                 stats.append(dict(type='heading', value='Completing ' + str(attempt_group) + '/' + str(total)))
                 stats.append(dict(type='stat', value=stat))
-        return stats, next_quiz
+        return stats, next_quiz, current_user_quizzes
 
 
 class QuizPageView(View):
@@ -97,8 +98,6 @@ class QuizPageView(View):
 
 def next_quiz_results(request, quiz_number):
     user_responses = Response.objects.filter(user=request.user)
-    print('user_responses = ', user_responses)
-    print('len(user_responses.filter(?)) = ', len(user_responses.filter(recipe__quiz_page__quiz_number=quiz_number+1)))
     if len(user_responses.filter(recipe__quiz_page__quiz_number=quiz_number+1)) == 0:
         return redirect('recipes:scoreboard')
     else:
@@ -132,6 +131,5 @@ class RecipeView(View):
     def get(self, request, recipe_id):
         recipe = Recipe.objects.get(id=recipe_id)
         quiz = recipe.quiz_page
-        print('quiz.quiz_number = ', quiz.quiz_number)
         context = {'memory': utilities.get_random_memory(), 'recipe': recipe, 'quiz_number': quiz.quiz_number}
         return render(request, self.template_name, context)
