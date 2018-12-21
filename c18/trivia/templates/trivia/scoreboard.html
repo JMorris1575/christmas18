@@ -36,19 +36,29 @@
             {% else %}
                 <p class="text-success">No rankings yet available.</p>
             {% endif %}
-            </div>
-            <hr>
-            <div class="col-md-10 mx-md-auto">
-                <div class="row justify-content-center mb-3">
-                    {% if user_attempts == 0 %}
-                        <a class="btn btn-outline-success text-center"
-                           href="{% url 'trivia:next_question' %}">First Question</a>
-                    {% else %}
-                        <a class="btn btn-outline-success mx-auto text-center"
-                           href="{% url 'trivia:next_question' %}">Next Question</a>
-                    {% endif %}
-                </div>
+        </div>
+        <hr>
+        <div class="col-md-10 mx-md-auto">
+            <div class="row justify-content-center mb-3">
+                {% if user_attempts == 0 %}
+                    <a class="btn btn-outline-success text-center"
+                       href="{% url 'trivia:next_question' %}">First Question
+                    </a>
+                {% else %}
+                    <a class="btn btn-outline-success mx-auto text-center"
+                       href="{% url 'trivia:next_question' %}">Next Question
+                    </a>
+                {% endif %}
             </div>
         </div>
+        {% if user.is_superuser %}
+            <div class="col-md-10 mx-md-auto">
+                <div class="row justify-content-center mb-3">
+                    <a class="btn btn-outline-success text-center"
+                       href="{% url 'trivia:save_files' %}">Save Question and Answer Files
+                    </a>
+                </div>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}

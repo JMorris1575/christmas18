@@ -130,5 +130,34 @@ def next_question_view(request, question_number):
         next = 1
     return redirect('trivia:display_question', next)
 
-class EndOfQuestions(View):
-    pass
+def save_trivia_view(request):
+    questions = TriviaQuestion.objects.all()
+    question_list = []
+    answer_list = []
+    question_number = 1
+    for question in questions:
+        question_list.append(str(question_number) + '. ' + str(question) + '\n')
+        answer_list.append(str(question_number) + '. ' + str(question) + '\n')
+        question_number += 1
+        choices = question.triviachoice_set.all()
+        choice_label = 'A'
+        for choice in choices:
+            question_list.append('\t' + choice_label + ') ' + str(choice) + '\n')
+            if choice.correct:
+                answer_list.append('\t' + choice_label + ') ' + str(choice).upper() + ' <--correct\n')
+            else:
+                answer_list.append('\t' + choice_label + ') ' + str(choice) + '\n')
+            choice_label = chr(ord(choice_label) + 1)
+        question_list.append('\n')
+        if question.explanation:
+            answer_list.append('Explanation: ' + str(question.explanation) + '\n')
+        if question.link:
+            answer_list.append('See: ' + str(question.link) + '\n')
+        answer_list.append('\n')
+    question_file = open('Christmas_Trivia_Questions.txt', 'w')
+    question_file.writelines(question_list)
+    question_file.close()
+    answer_file = open('Christmas_Trivia_Answers.txt', 'w')
+    answer_file.writelines(answer_list)
+    answer_file.close()
+    return redirect('trivia:scoreboard')

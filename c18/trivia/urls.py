@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 
 from .views import (ScoreboardView, NextQuestionView, DisplayQuestionView, DisplayResultView,
-                    previous_question_view, next_question_view)
+                    previous_question_view, next_question_view, save_trivia_view)
 
 app_name = 'trivia'
 
@@ -16,4 +16,5 @@ urlpatterns = [
     path('result/<int:question_number>/<int:choice_id>/', login_required(DisplayResultView.as_view()), name='result'),
     path('previous/<int:question_number>/', login_required(previous_question_view), name='previous'),
     path('next/<int:question_number>/', login_required(next_question_view), name='next'),
+    path('save/', login_required(save_trivia_view), name='save_files')
 ]
