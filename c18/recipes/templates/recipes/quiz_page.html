@@ -9,9 +9,9 @@
             <p class="card-title">
                 Here are the recipes to match to each of the following sets of ingredients:
             </p>
-            {% for recipe in recipes %}
+            {% for name in recipe_names %}
                 <p class="card-title text-center">
-                    {{ recipe.name }}
+                    {{ name }}
                 </p>
             {% endfor %}
             <p class="card-title">
@@ -32,18 +32,20 @@
                         <div class="col preserve-whitespace
                             card-text text-center text-success">{{ recipe.ingredients }}</div>
                         <select class="col form-control form-control-lg text-success" name="{{ recipe.name }}">
-                            <option></option>
-                            {% for name in recipe_names %}
-                                {% if guesses %}
-                                    {% if guesses|recipe_name:recipe == name %}
-                                        <option value="{{ name }}" selected>{{ name }}</option>
+                            <optgroup class="recipe-option">
+                                <option></option>
+                                {% for name in recipe_names %}
+                                    {% if guesses %}
+                                        {% if guesses|recipe_name:recipe == name %}
+                                            <option class="text-success" value="{{ name }}" selected>{{ name }}</option>
+                                        {% else %}
+                                            <option class="text-success" value="{{ name }}">{{ name }}</option>
+                                        {% endif %}
                                     {% else %}
-                                        <option value="{{ name }}">{{ name }}</option>
+                                        <option class="text-success" value="{{ name }}">{{ name }}</option>
                                     {% endif %}
-                                {% else %}
-                                    <option value="{{ name }}">{{ name }}</option>
-                                {% endif %}
-                            {% endfor %}
+                                {% endfor %}
+                            </optgroup>
                         </select>
                     </div>
                     <hr>

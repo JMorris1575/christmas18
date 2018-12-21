@@ -8,9 +8,17 @@ class QuizPage(models.Model):
     quiz_number = models.SmallIntegerField(unique=True)
     title = models.CharField(max_length=40)
 
-
     def __str__(self):
-        return 'Quiz Page: ' + self.title
+        return 'Quiz Page ' + str(self.quiz_number) + ': ' + self.title
+
+    def is_next_quiz(self):
+        if self.quiz_number < len(QuizPage.objects.all()):
+            return True
+        else:
+            return False
+
+        class Meta:
+            ordering = ['quiz_number']
 
 
 class Recipe(models.Model):
@@ -24,6 +32,9 @@ class Recipe(models.Model):
 
     def get_recipe_image_filename(self):
         return os.path.join('recipes', 'images', 'recipe_images', self.recipe_image_filename)
+
+    class Meta:
+        ordering = ['pk']
 
 
 class Response(models.Model):

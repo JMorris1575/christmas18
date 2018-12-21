@@ -39,6 +39,27 @@
                 </div>
                 <hr>
             {% endfor %}
+            <div class="row justify-content-around">
+                {% if quiz.quiz_number != 1 %}
+                    <a class="btn btn-outline-success btn-lg text-center"
+                       href="{% url 'recipes:previous_results' quiz.quiz_number %}">
+                        Previous
+                    </a>
+                {% else %}
+                    <div> </div>
+                {% endif %}
+                <a class="btn btn-outline-success btn-lg text-center" href="{% url 'recipes:scoreboard' %}">
+                    Scoreboard
+                </a>
+                {% if quiz.is_next_quiz %}
+                    <a class="btn btn-outline-success btn-lg text-center"
+                       href="{% url 'recipes:next_results' quiz.quiz_number %}">
+                        Next
+                    </a>
+                {% else %}
+                    <div> </div>
+                {% endif %}
+            </div>
         </div>
     </div>
 {% endblock %}

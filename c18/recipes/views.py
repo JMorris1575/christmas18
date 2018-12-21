@@ -95,6 +95,22 @@ class QuizPageView(View):
         return redirect('recipes:quiz_results', quiz_number=quiz_number)
 
 
+def next_quiz_results(request, quiz_number):
+    user_responses = Response.objects.filter(user=request.user)
+    print('user_responses = ', user_responses)
+    print('len(user_responses.filter(?)) = ', len(user_responses.filter(recipe__quiz_page__quiz_number=quiz_number+1)))
+    if len(user_responses.filter(recipe__quiz_page__quiz_number=quiz_number+1)) == 0:
+        return redirect('recipes:scoreboard')
+    else:
+        return redirect('recipes:quiz_results', quiz_number+1)
+
+def previous_quiz_results(request, quiz_number):
+    if quiz_number == 1:
+        return redirect('recipes:scoreboard')
+    else:
+        return redirect('recipes:quiz_results', quiz_number-1)
+
+
 class QuizResultsView(View):
     template_name = 'recipes/quiz_results.html'
 
