@@ -37,7 +37,7 @@ class Object(models.Model):
         returns the combined number of votes cast on descriptions for this object
         :return: integer
         """
-        return len(Contribution.objects.filter(type=Contribution.VOTE))
+        return len(Contribution.objects.filter(object=self, type=Contribution.VOTE))
 
 
 class Description(models.Model):

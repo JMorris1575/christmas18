@@ -96,20 +96,6 @@ class QuizPageView(View):
         return redirect('recipes:quiz_results', quiz_number=quiz_number)
 
 
-def next_quiz_results(request, quiz_number):
-    user_responses = Response.objects.filter(user=request.user)
-    if len(user_responses.filter(recipe__quiz_page__quiz_number=quiz_number+1)) == 0:
-        return redirect('recipes:scoreboard')
-    else:
-        return redirect('recipes:quiz_results', quiz_number+1)
-
-def previous_quiz_results(request, quiz_number):
-    if quiz_number == 1:
-        return redirect('recipes:scoreboard')
-    else:
-        return redirect('recipes:quiz_results', quiz_number-1)
-
-
 class QuizResultsView(View):
     template_name = 'recipes/quiz_results.html'
 
@@ -121,7 +107,9 @@ class QuizResultsView(View):
             results.append((response.recipe, response.guess))
             if response.recipe.name == response.guess:
                 correct += 1
-        context = {'memory':utilities.get_random_memory(), 'quiz': quiz, 'results': results, 'correct': correct}
+        previous_results, next_results = quiz.get_previous_next_results(request.user)
+        context = {'memory':utilities.get_random_memory(), 'quiz': quiz, 'results': results, 'correct': correct,
+                   'previous_results': previous_results, 'next_results': next_results}
         return render(request, self.template_name, context)
 
 

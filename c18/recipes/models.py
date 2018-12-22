@@ -17,6 +17,22 @@ class QuizPage(models.Model):
         else:
             return False
 
+    def get_previous_next_results(self, user):
+        # get previous results page
+        if self.quiz_number == 1:
+            previous_results = None
+        else:
+            previous_results = self.quiz_number - 1
+
+        # get next results page the user can access
+        user_responses = Response.objects.filter(user=user)
+        if len(user_responses.filter(recipe__quiz_page__quiz_number=self.quiz_number+1)) == 0:  # no next for this user
+            next_results = None
+        else:
+            next_results = self.quiz_number + 1
+
+        return previous_results, next_results
+
         class Meta:
             ordering = ['quiz_number']
 
